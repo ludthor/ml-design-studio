@@ -43,17 +43,20 @@ function smoothPath(x1: number, y1: number, x2: number, y2: number): string {
   // Vertical layout (mobile single-column): use vertical bezier
   if (dy > dx * 1.2) {
     const cp = Math.max(dy * 0.3, 30);
-    return `M ${x1} ${y1} C ${x1} ${y1 + cp}, ${x2} ${y2 - cp}, ${x2} ${y2}`;
+    const dirY = y2 > y1 ? 1 : -1;
+    return `M ${x1} ${y1} C ${x1} ${y1 + cp * dirY}, ${x2} ${y2 - cp * dirY}, ${x2} ${y2}`;
   }
   // Horizontal layout (desktop grid)
   const cp = Math.max(dx * 0.4, 30);
-  return `M ${x1} ${y1} C ${x1 + cp} ${y1}, ${x2 - cp} ${y2}, ${x2} ${y2}`;
+  const dirX = x2 > x1 ? 1 : -1;
+  return `M ${x1} ${y1} C ${x1 + cp * dirX} ${y1}, ${x2 - cp * dirX} ${y2}, ${x2} ${y2}`;
 }
 
 export default function ConnectionLayer() {
   const { state, dispatch } = useProject();
   const { connections, blocks } = state.project;
   const [arrows, setArrows] = useState<ArrowLine[]>([]);
+  const [svgSize, setSvgSize] = useState({ w: 0, h: 0 });
 
   const recalc = useCallback(() => {
     const container = document.getElementById('design-canvas');
@@ -69,15 +72,22 @@ export default function ConnectionLayer() {
       const endH = getBlockAnchor(conn.targetBlockId, 'left', container);
       if (!startH || !endH) continue;
 
-      // Detect vertical stacking (mobile): if vertical distance dominates, use bottom→top
-      const dy = Math.abs(endH.y - startH.y);
-      const dx = Math.abs(endH.x - startH.x);
-      const isVertical = dy > dx * 1.2;
+      // Use block centers for layout detection (right/left edges are misleading on full-width blocks)
+      const srcEl = document.getElementById(`block-${conn.sourceBlockId}`);
+      const tgtEl = document.getElementById(`block-${conn.targetBlockId}`);
+      if (!srcEl || !tgtEl) continue;
+      const srcRect = srcEl.getBoundingClientRect();
+      const tgtRect = tgtEl.getBoundingClientRect();
+      const centerDx = Math.abs((srcRect.left + srcRect.width / 2) - (tgtRect.left + tgtRect.width / 2));
+      const centerDy = Math.abs((srcRect.top + srcRect.height / 2) - (tgtRect.top + tgtRect.height / 2));
+      const isVertical = centerDy > centerDx * 1.5;
 
       let start, end;
       if (isVertical) {
-        start = getBlockAnchor(conn.sourceBlockId, 'bottom', container);
-        end = getBlockAnchor(conn.targetBlockId, 'top', container);
+        // Vertical stacking (mobile): use bottom→top anchors
+        const srcBelow = srcRect.top > tgtRect.top;
+        start = getBlockAnchor(conn.sourceBlockId, srcBelow ? 'top' : 'bottom', container);
+        end = getBlockAnchor(conn.targetBlockId, srcBelow ? 'bottom' : 'top', container);
         if (!start || !end) continue;
       } else {
         start = startH;
@@ -102,6 +112,11 @@ export default function ConnectionLayer() {
       });
     }
     setArrows(newArrows);
+
+    // Size SVG to full scrollable content
+    if (container) {
+      setSvgSize({ w: container.scrollWidth, h: container.scrollHeight });
+    }
   }, [connections, blocks, state.ui.selectedBlockId]);
 
   useEffect(() => {
@@ -131,8 +146,8 @@ export default function ConnectionLayer() {
     <>
       {arrows.length > 0 && (
         <svg
-          className="absolute inset-0 w-full h-full pointer-events-none"
-          style={{ zIndex: 5 }}
+          className="absolute top-0 left-0 pointer-events-none hidden lg:block"
+          style={{ zIndex: 5, width: svgSize.w || '100%', height: svgSize.h || '100%' }}
         >
           <defs>
             {arrows.map((a) => (

@@ -63,8 +63,26 @@ body {
   position: absolute;
   z-index: 10;
 }
-/* On touch devices (no hover), always show anchors */
-@media (hover: none) {
+/* On small screens, hide anchors by default — only show in connection mode */
+@media (max-width: 1023px) {
+  .connection-anchor {
+    display: none;
+  }
+  .connection-anchor.connecting-mode {
+    display: block;
+    opacity: 1 !important;
+    width: 14px;
+    height: 14px;
+  }
+  .connection-anchor.connecting-mode.right {
+    right: -7px;
+  }
+  .connection-anchor.connecting-mode.left {
+    left: -7px;
+  }
+}
+/* On touch devices at desktop size, always show anchors */
+@media (hover: none) and (min-width: 1024px) {
   .connection-anchor {
     opacity: 1 !important;
     width: 14px;
