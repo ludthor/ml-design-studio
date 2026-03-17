@@ -85,6 +85,26 @@ export const GLOSSARY: GlossaryEntry[] = [
 
   // ── Preprocessing ───────────────────────────────────────────────────────
   {
+    term: 'Cleaning',
+    definition:
+      'Removing noise, fixing typos, dropping duplicates, and correcting inconsistencies in raw data before training.',
+    keyInsight:
+      'Data cleaning often has a bigger impact on model performance than choosing a fancier algorithm. Spend time here — garbage in, garbage out is the most reliable rule in ML.',
+    pitfalls:
+      'Aggressive cleaning can remove valuable signal. Outliers might be errors or they might be the most interesting cases (e.g., fraud). Always inspect before deleting.',
+    related: ['Missing value handling', 'Normalization', 'Feature extraction'],
+  },
+  {
+    term: 'Missing value handling',
+    definition:
+      'Strategies for dealing with gaps in your data — deletion, imputation (mean, median, mode), or model-based filling.',
+    keyInsight:
+      'Data is rarely missing at random. Understanding why values are missing is as important as how you fill them. Missing-ness itself can be a useful feature.',
+    pitfalls:
+      'Mean imputation distorts variance and correlations. For important features with many missing values, consider multiple imputation or training a model to predict the missing values.',
+    related: ['Cleaning', 'Feature extraction', 'Balancing'],
+  },
+  {
     term: 'Normalization',
     definition:
       'Scaling feature values to a fixed range, typically [0, 1], so that no single feature dominates.',
@@ -93,6 +113,16 @@ export const GLOSSARY: GlossaryEntry[] = [
     pitfalls:
       'Always fit the scaler on training data only, then transform validation/test data with the same parameters. Fitting on all data causes data leakage.',
     related: ['Standardization', 'Feature extraction'],
+  },
+  {
+    term: 'Standardization',
+    definition:
+      'Centering feature values to zero mean and unit variance (z-score transformation), commonly used for algorithms that assume normally distributed inputs.',
+    keyInsight:
+      'Unlike normalization (which squashes to [0,1]), standardization preserves outlier information and is preferred for algorithms that assume Gaussian-distributed features (logistic regression, SVM, PCA).',
+    pitfalls:
+      'Like normalization, fit the scaler on training data only. Standardization does not bound values to a fixed range, so outliers can still produce extreme values.',
+    related: ['Normalization', 'Dimensionality reduction', 'Feature extraction'],
   },
   {
     term: 'Tokenization',
@@ -133,6 +163,46 @@ export const GLOSSARY: GlossaryEntry[] = [
     pitfalls:
       'Embeddings encode the biases in their training data. "Doctor" may be closer to "man" than "woman" in biased corpora.',
     related: ['Tokenization', 'Transfer learning', 'Bias'],
+  },
+  {
+    term: 'Feature extraction',
+    definition:
+      'Deriving meaningful, structured signals from raw unstructured data — e.g., edges from images, TF-IDF from text, spectrograms from audio.',
+    keyInsight:
+      'Good features can make a simple model outperform a complex one with bad features. Deep learning automates feature extraction, but domain-crafted features still win in tabular data.',
+    pitfalls:
+      'Creating too many features without selection leads to the curse of dimensionality. Always validate that new features actually improve performance on a holdout set.',
+    related: ['Embedding', 'Dimensionality reduction', 'Normalization'],
+  },
+  {
+    term: 'Resizing',
+    definition:
+      'Transforming images, audio clips, or text sequences to a uniform input size required by the model architecture.',
+    keyInsight:
+      'Most model architectures require fixed-size inputs. Resizing is not just about pixels — padding sequences, cropping audio, and truncating text are all forms of resizing with trade-offs.',
+    pitfalls:
+      'Aggressive downscaling destroys fine details; upscaling creates artifacts. For images, consider aspect-ratio-preserving resize with padding instead of naive stretching.',
+    related: ['Data augmentation', 'Normalization', 'CNN'],
+  },
+  {
+    term: 'Balancing',
+    definition:
+      'Correcting class imbalance in the training set so the model does not ignore minority classes.',
+    keyInsight:
+      'Class imbalance is one of the most common causes of misleading accuracy. A fraud detector trained on 99.9% non-fraud data will just predict "no fraud" every time unless you balance.',
+    pitfalls:
+      'Oversampling minority classes (SMOTE) can cause overfitting. Undersampling majority classes discards data. Class-weighted loss functions are often a better first approach.',
+    related: ['Data augmentation', 'Classification', 'Precision', 'Recall'],
+  },
+  {
+    term: 'Dimensionality reduction',
+    definition:
+      'Reducing the number of input features while preserving as much information as possible, using techniques like PCA, t-SNE, or UMAP.',
+    keyInsight:
+      'High-dimensional data is sparse — distances between points become meaningless (curse of dimensionality). Reducing dimensions can improve both model performance and training speed.',
+    pitfalls:
+      'PCA is linear and may miss nonlinear structure. t-SNE/UMAP are great for visualization but should not be used to generate features for downstream models.',
+    related: ['Feature extraction', 'Standardization', 'Autoencoder'],
   },
 
   // ── Modeling ────────────────────────────────────────────────────────────
