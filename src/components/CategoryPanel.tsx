@@ -1,6 +1,7 @@
 import { useDroppable } from '@dnd-kit/core';
 import { useProject } from '../context/ProjectContext';
 import type { CategoryDef } from '../types';
+import { Plus } from 'lucide-react';
 import DesignBlock from './DesignBlock';
 
 const EMPTY_HINTS: Record<string, string> = {
@@ -15,13 +16,17 @@ const EMPTY_HINTS: Record<string, string> = {
 };
 
 export default function CategoryPanel({ category }: { category: CategoryDef }) {
-  const { getBlocksForCategory } = useProject();
+  const { dispatch, getBlocksForCategory } = useProject();
   const blocks = getBlocksForCategory(category.id);
 
   const { isOver, setNodeRef } = useDroppable({
     id: `category-${category.id}`,
     data: { type: 'category', categoryId: category.id },
   });
+
+  const openSelector = () => {
+    dispatch({ type: 'SET_MOBILE_SELECTOR', category: category.id });
+  };
 
   return (
     <div
@@ -32,12 +37,18 @@ export default function CategoryPanel({ category }: { category: CategoryDef }) {
           : 'border-slate-200 bg-white'
       }`}
     >
-      {/* Category header */}
+      {/* Category header — tappable on mobile to open selector */}
       <div
-        className="px-3 py-2 rounded-t-xl border-b"
+        className="px-3 py-2 rounded-t-xl border-b lg:cursor-default cursor-pointer"
         style={{
           backgroundColor: category.bgColor,
           borderBottomColor: category.borderColor,
+        }}
+        onClick={(e) => {
+          if (window.innerWidth < 1024) {
+            e.stopPropagation();
+            openSelector();
+          }
         }}
       >
         <div className="flex items-center gap-2">
@@ -53,7 +64,19 @@ export default function CategoryPanel({ category }: { category: CategoryDef }) {
           >
             {category.label}
           </span>
-          <span className="ml-auto text-[10px] font-medium text-slate-400">
+          {/* Mobile + button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              openSelector();
+            }}
+            className="lg:hidden ml-auto w-5 h-5 flex items-center justify-center rounded-full text-white cursor-pointer"
+            style={{ backgroundColor: category.color }}
+            title={`Add block to ${category.label}`}
+          >
+            <Plus size={12} strokeWidth={3} />
+          </button>
+          <span className="hidden lg:inline ml-auto text-[10px] font-medium text-slate-400">
             {blocks.length}
           </span>
         </div>
@@ -65,9 +88,18 @@ export default function CategoryPanel({ category }: { category: CategoryDef }) {
       {/* Block drop zone */}
       <div className="flex-1 p-2 space-y-1.5">
         {blocks.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full min-h-[80px] gap-1">
+          <div
+            className="flex flex-col items-center justify-center h-full min-h-[80px] gap-1 lg:cursor-default cursor-pointer"
+            onClick={(e) => {
+              if (window.innerWidth < 1024) {
+                e.stopPropagation();
+                openSelector();
+              }
+            }}
+          >
             <p className="text-[11px] text-slate-300 font-medium">
-              Drop blocks here
+              <span className="hidden lg:inline">Drop blocks here</span>
+              <span className="lg:hidden">Tap to add blocks</span>
             </p>
             <p className="text-[10px] text-slate-300/70 italic">
               {EMPTY_HINTS[category.id] || ''}

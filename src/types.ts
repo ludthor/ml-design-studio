@@ -46,6 +46,7 @@ export interface UIState {
   showResetConfirm: boolean;
   showMobileSidebar: boolean;
   showMobileInspector: boolean;
+  mobileSelectorCategory: CategoryId | null;
 }
 
 export interface CategoryDef {

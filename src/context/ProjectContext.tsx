@@ -44,6 +44,7 @@ const defaultUI: UIState = {
   showResetConfirm: false,
   showMobileSidebar: false,
   showMobileInspector: false,
+  mobileSelectorCategory: null,
 };
 
 function loadFromStorage(): Project | null {
@@ -90,7 +91,8 @@ type Action =
   | { type: 'SELECT_BLOCK'; id: string | null }
   | { type: 'SET_CONNECTION_SOURCE'; id: string | null }
   | { type: 'SET_SEARCH_QUERY'; query: string }
-  | { type: 'TOGGLE_UI'; key: keyof Omit<UIState, 'selectedBlockId' | 'connectionSource' | 'searchQuery'>; value?: boolean }
+  | { type: 'TOGGLE_UI'; key: keyof Omit<UIState, 'selectedBlockId' | 'connectionSource' | 'searchQuery' | 'mobileSelectorCategory'>; value?: boolean }
+  | { type: 'SET_MOBILE_SELECTOR'; category: CategoryId | null }
   | { type: 'SAVE' }
   | { type: 'RESET' }
   | { type: 'LOAD_PROJECT'; project: Project }
@@ -232,6 +234,9 @@ function reducer(state: AppState, action: Action): AppState {
 
     case 'SET_SEARCH_QUERY':
       return { ...state, ui: { ...state.ui, searchQuery: action.query } };
+
+    case 'SET_MOBILE_SELECTOR':
+      return { ...state, ui: { ...state.ui, mobileSelectorCategory: action.category } };
 
     case 'TOGGLE_UI': {
       const currentVal = state.ui[action.key];
