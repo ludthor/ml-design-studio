@@ -65,7 +65,7 @@ export default function CategoryCanvas() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2 gap-3 flex-1 min-h-0">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2 gap-3 lg:flex-1 min-h-0">
         {CATEGORIES.map((cat) => (
           <CategoryPanel key={cat.id} category={cat} />
         ))}

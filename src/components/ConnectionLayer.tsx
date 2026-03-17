@@ -14,20 +14,38 @@ interface ArrowLine {
   targetLabel: string;
 }
 
-function getBlockCenter(blockId: string, side: 'right' | 'left', container: HTMLElement) {
+function getBlockAnchor(blockId: string, side: 'right' | 'left' | 'bottom' | 'top', container: HTMLElement) {
   const el = document.getElementById(`block-${blockId}`);
   if (!el) return null;
   const blockRect = el.getBoundingClientRect();
   const containerRect = container.getBoundingClientRect();
-  const x = side === 'right'
-    ? blockRect.right - containerRect.left + container.scrollLeft
-    : blockRect.left - containerRect.left + container.scrollLeft;
-  const y = blockRect.top + blockRect.height / 2 - containerRect.top + container.scrollTop;
-  return { x, y };
+  const scrollX = container.scrollLeft;
+  const scrollY = container.scrollTop;
+  const ox = -containerRect.left + scrollX;
+  const oy = -containerRect.top + scrollY;
+
+  switch (side) {
+    case 'right':
+      return { x: blockRect.right + ox, y: blockRect.top + blockRect.height / 2 + oy };
+    case 'left':
+      return { x: blockRect.left + ox, y: blockRect.top + blockRect.height / 2 + oy };
+    case 'bottom':
+      return { x: blockRect.left + blockRect.width / 2 + ox, y: blockRect.bottom + oy };
+    case 'top':
+      return { x: blockRect.left + blockRect.width / 2 + ox, y: blockRect.top + oy };
+  }
 }
 
 function smoothPath(x1: number, y1: number, x2: number, y2: number): string {
   const dx = Math.abs(x2 - x1);
+  const dy = Math.abs(y2 - y1);
+
+  // Vertical layout (mobile single-column): use vertical bezier
+  if (dy > dx * 1.2) {
+    const cp = Math.max(dy * 0.3, 30);
+    return `M ${x1} ${y1} C ${x1} ${y1 + cp}, ${x2} ${y2 - cp}, ${x2} ${y2}`;
+  }
+  // Horizontal layout (desktop grid)
   const cp = Math.max(dx * 0.4, 30);
   return `M ${x1} ${y1} C ${x1 + cp} ${y1}, ${x2 - cp} ${y2}, ${x2} ${y2}`;
 }
@@ -47,9 +65,24 @@ export default function ConnectionLayer() {
       const targetBlock = blocks.find((b) => b.id === conn.targetBlockId);
       if (!sourceBlock || !targetBlock) continue;
 
-      const start = getBlockCenter(conn.sourceBlockId, 'right', container);
-      const end = getBlockCenter(conn.targetBlockId, 'left', container);
-      if (!start || !end) continue;
+      const startH = getBlockAnchor(conn.sourceBlockId, 'right', container);
+      const endH = getBlockAnchor(conn.targetBlockId, 'left', container);
+      if (!startH || !endH) continue;
+
+      // Detect vertical stacking (mobile): if vertical distance dominates, use bottom→top
+      const dy = Math.abs(endH.y - startH.y);
+      const dx = Math.abs(endH.x - startH.x);
+      const isVertical = dy > dx * 1.2;
+
+      let start, end;
+      if (isVertical) {
+        start = getBlockAnchor(conn.sourceBlockId, 'bottom', container);
+        end = getBlockAnchor(conn.targetBlockId, 'top', container);
+        if (!start || !end) continue;
+      } else {
+        start = startH;
+        end = endH;
+      }
 
       const sourceCat = CATEGORY_MAP[sourceBlock.category];
       const isRelated =
