@@ -93,10 +93,7 @@ export default function SidebarLibrary() {
                 ) : (
                   <ChevronRight size={12} />
                 )}
-                <span
-                  className="w-2 h-2 rounded-full shrink-0"
-                  style={{ backgroundColor: cat.color }}
-                />
+                <cat.icon size={12} className="shrink-0" style={{ color: cat.color }} />
                 {cat.label}
                 <span className="ml-auto text-slate-400 text-[10px]">
                   {blocks.length}

@@ -63,6 +63,7 @@ export interface CategoryDef {
   lightBg: string;
   row: number;
   col: number;
+  icon: React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }>;
 }
 
 export interface BlockTemplate {

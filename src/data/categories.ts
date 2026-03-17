@@ -1,4 +1,14 @@
 import type { CategoryDef } from '../types';
+import {
+  Crosshair,
+  Database,
+  Filter,
+  Brain,
+  Dumbbell,
+  BarChart3,
+  Rocket,
+  ShieldAlert,
+} from 'lucide-react';
 
 export const CATEGORIES: CategoryDef[] = [
   {
@@ -12,6 +22,7 @@ export const CATEGORIES: CategoryDef[] = [
     lightBg: '#eff6ff',
     row: 1,
     col: 1,
+    icon: Crosshair,
   },
   {
     id: 'data-sources',
@@ -24,6 +35,7 @@ export const CATEGORIES: CategoryDef[] = [
     lightBg: '#ecfdf5',
     row: 1,
     col: 2,
+    icon: Database,
   },
   {
     id: 'preprocessing',
@@ -36,6 +48,7 @@ export const CATEGORIES: CategoryDef[] = [
     lightBg: '#f5f3ff',
     row: 1,
     col: 3,
+    icon: Filter,
   },
   {
     id: 'modeling',
@@ -48,6 +61,7 @@ export const CATEGORIES: CategoryDef[] = [
     lightBg: '#fffbeb',
     row: 1,
     col: 4,
+    icon: Brain,
   },
   {
     id: 'training-optimization',
@@ -60,6 +74,7 @@ export const CATEGORIES: CategoryDef[] = [
     lightBg: '#fef2f2',
     row: 2,
     col: 1,
+    icon: Dumbbell,
   },
   {
     id: 'evaluation',
@@ -72,6 +87,7 @@ export const CATEGORIES: CategoryDef[] = [
     lightBg: '#ecfeff',
     row: 2,
     col: 2,
+    icon: BarChart3,
   },
   {
     id: 'output-deployment',
@@ -84,6 +100,7 @@ export const CATEGORIES: CategoryDef[] = [
     lightBg: '#fdf2f8',
     row: 2,
     col: 3,
+    icon: Rocket,
   },
   {
     id: 'risks-constraints',
@@ -96,6 +113,7 @@ export const CATEGORIES: CategoryDef[] = [
     lightBg: '#f8fafc',
     row: 2,
     col: 4,
+    icon: ShieldAlert,
   },
 ];
 

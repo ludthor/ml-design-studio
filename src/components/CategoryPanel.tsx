@@ -53,10 +53,10 @@ export default function CategoryPanel({ category }: { category: CategoryDef }) {
       >
         <div className="flex items-center gap-2">
           <span
-            className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0"
+            className="w-5 h-5 rounded-full flex items-center justify-center shrink-0"
             style={{ backgroundColor: category.color }}
           >
-            {category.step}
+            <category.icon size={12} className="text-white" />
           </span>
           <span
             className="text-xs font-semibold"
