@@ -46,6 +46,7 @@ export interface UIState {
   showResetConfirm: boolean;
   showMobileSidebar: boolean;
   showMobileInspector: boolean;
+  showGlossary: boolean;
   mobileSelectorCategory: CategoryId | null;
 }
 
@@ -75,4 +76,43 @@ export interface ValidationCheck {
   label: string;
   status: ValidationStatus;
   message: string;
+}
+
+// ─── Rubric ──────────────────────────────────────────────────────────────────
+
+export interface RubricDimension {
+  id: string;
+  label: string;
+  score: number;
+  maxScore: number;
+  feedback: string;
+}
+
+export interface RubricResult {
+  dimensions: RubricDimension[];
+  totalScore: number;
+  maxScore: number;
+  grade: string;
+  gradeLabel: string;
+}
+
+// ─── Contextual Hints ────────────────────────────────────────────────────────
+
+export type HintPriority = 'high' | 'medium' | 'low';
+
+export interface ContextualHint {
+  id: string;
+  priority: HintPriority;
+  message: string;
+  suggestion?: string;
+}
+
+// ─── Glossary ────────────────────────────────────────────────────────────────
+
+export interface GlossaryEntry {
+  term: string;
+  definition: string;
+  keyInsight: string;
+  pitfalls?: string;
+  related?: string[];
 }

@@ -91,5 +91,73 @@ export function runValidation(project: Project): ValidationCheck[] {
     });
   }
 
+  // ── New checks ──────────────────────────────────────────────────────────
+
+  // Preprocessing but no data sources
+  if (has('preprocessing') && !has('data-sources')) {
+    checks.push({
+      id: 'preprocess-no-data',
+      label: 'Preprocessing without Data',
+      status: 'warning',
+      message: 'Preprocessing defined but no Data Sources — what are you cleaning?',
+    });
+  }
+
+  // Model but no training/optimization
+  if (has('modeling') && !has('training-optimization')) {
+    checks.push({
+      id: 'model-no-training',
+      label: 'Model without Training',
+      status: 'warning',
+      message: 'Model defined but no Training strategy — how will it learn?',
+    });
+  }
+
+  // Connections check
+  if (project.blocks.length >= 3 && project.connections.length === 0) {
+    checks.push({
+      id: 'no-connections',
+      label: 'No connections',
+      status: 'warning',
+      message: 'No connections between blocks — link them to show data flow',
+    });
+  } else if (project.connections.length > 0) {
+    checks.push({
+      id: 'has-connections',
+      label: 'Block connections',
+      status: 'complete',
+      message: `${project.connections.length} connection(s) defined`,
+    });
+  }
+
+  // Data split for modeling
+  const labels = new Set(project.blocks.map((b) => b.label.toLowerCase()));
+  if (has('modeling') && has('data-sources') && !labels.has('train/validation/test split')) {
+    checks.push({
+      id: 'no-data-split',
+      label: 'Data split missing',
+      status: 'warning',
+      message: 'No Train/Validation/Test split — essential for honest evaluation',
+    });
+  }
+
+  // Evaluation diversity
+  const evalBlocks = blocksByCategory.get('evaluation') ?? [];
+  if (evalBlocks.length === 1) {
+    checks.push({
+      id: 'single-metric',
+      label: 'Single metric',
+      status: 'warning',
+      message: 'Only one evaluation metric — consider multiple perspectives on model quality',
+    });
+  } else if (evalBlocks.length >= 3) {
+    checks.push({
+      id: 'diverse-eval',
+      label: 'Evaluation diversity',
+      status: 'complete',
+      message: `${evalBlocks.length} evaluation methods — thorough assessment`,
+    });
+  }
+
   return checks;
 }

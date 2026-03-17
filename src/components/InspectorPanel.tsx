@@ -1,7 +1,8 @@
 import { useProject } from '../context/ProjectContext';
 import { CATEGORY_MAP } from '../data/categories';
+import { findGlossaryEntry } from '../data/glossary';
 import type { Block } from '../types';
-import { Trash2, Copy, X } from 'lucide-react';
+import { Trash2, Copy, X, BookOpen } from 'lucide-react';
 
 export default function InspectorPanel({ mobile }: { mobile?: boolean }) {
   const { dispatch, getSelectedBlock } = useProject();
@@ -136,6 +137,9 @@ export default function InspectorPanel({ mobile }: { mobile?: boolean }) {
             Custom block
           </span>
         )}
+
+        {/* Glossary insight */}
+        <GlossaryInsight label={block.label} dispatch={dispatch} />
       </div>
 
       {/* Actions — sticky at bottom */}
@@ -172,6 +176,44 @@ function Field({
         {label}
       </label>
       {children}
+    </div>
+  );
+}
+
+function GlossaryInsight({
+  label,
+  dispatch,
+}: {
+  label: string;
+  dispatch: React.Dispatch<{ type: 'TOGGLE_UI'; key: 'showGlossary'; value: boolean }>;
+}) {
+  const entry = findGlossaryEntry(label);
+  if (!entry) return null;
+
+  return (
+    <div className="bg-violet-50/70 rounded-lg p-2.5 space-y-1.5">
+      <div className="flex items-center gap-1.5">
+        <BookOpen size={10} className="text-violet-500" />
+        <span className="text-[10px] font-semibold text-violet-600 uppercase tracking-wider">
+          Key Insight
+        </span>
+      </div>
+      <p className="text-[10px] text-violet-700 leading-snug">
+        {entry.keyInsight}
+      </p>
+      {entry.pitfalls && (
+        <p className="text-[10px] text-amber-700 leading-snug bg-amber-50 rounded px-2 py-1">
+          ⚠ {entry.pitfalls}
+        </p>
+      )}
+      <button
+        onClick={() =>
+          dispatch({ type: 'TOGGLE_UI', key: 'showGlossary', value: true })
+        }
+        className="text-[10px] text-violet-500 font-medium hover:text-violet-700 cursor-pointer"
+      >
+        Open Glossary →
+      </button>
     </div>
   );
 }

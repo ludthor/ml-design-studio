@@ -44,6 +44,7 @@ const defaultUI: UIState = {
   showResetConfirm: false,
   showMobileSidebar: false,
   showMobileInspector: false,
+  showGlossary: false,
   mobileSelectorCategory: null,
 };
 
