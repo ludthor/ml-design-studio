@@ -47,6 +47,7 @@ export interface UIState {
   showMobileSidebar: boolean;
   showMobileInspector: boolean;
   showGlossary: boolean;
+  showTemplates: boolean;
   mobileSelectorCategory: CategoryId | null;
 }
 

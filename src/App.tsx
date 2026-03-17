@@ -82,6 +82,7 @@ function AppInner() {
         dispatch({ type: 'TOGGLE_UI', key: 'showSummary', value: false });
         dispatch({ type: 'TOGGLE_UI', key: 'showResetConfirm', value: false });
         dispatch({ type: 'TOGGLE_UI', key: 'showGlossary', value: false });
+        dispatch({ type: 'TOGGLE_UI', key: 'showTemplates', value: false });
       }
       // Delete selected block
       if ((e.key === 'Delete' || e.key === 'Backspace') && !isInputFocused()) {

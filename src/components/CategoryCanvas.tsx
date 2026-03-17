@@ -2,7 +2,7 @@ import { CATEGORIES } from '../data/categories';
 import CategoryPanel from './CategoryPanel';
 import ConnectionLayer from './ConnectionLayer';
 import { useProject } from '../context/ProjectContext';
-import { ArrowRightLeft, GripVertical, MousePointerClick, X } from 'lucide-react';
+import { ArrowRightLeft, GripVertical, MousePointerClick, X, LayoutTemplate } from 'lucide-react';
 import { useState } from 'react';
 
 export default function CategoryCanvas() {
@@ -60,6 +60,19 @@ export default function CategoryCanvas() {
                 </div>
                 <span>Connect blocks</span>
               </div>
+            </div>
+
+            <div className="mt-4 pointer-events-auto">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  dispatch({ type: 'TOGGLE_UI', key: 'showTemplates', value: true });
+                }}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-medium transition-colors shadow-sm cursor-pointer"
+              >
+                <LayoutTemplate size={14} />
+                Browse starter templates
+              </button>
             </div>
           </div>
         </div>

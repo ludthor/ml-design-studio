@@ -9,6 +9,7 @@ import HelpModal from './HelpModal';
 import ConfirmDialog from './ConfirmDialog';
 import MobileBlockSelector from './MobileBlockSelector';
 import GlossaryModal from './GlossaryModal';
+import TemplateGallery from './TemplateGallery';
 import { useProject } from '../context/ProjectContext';
 
 export default function AppShell() {
@@ -66,6 +67,7 @@ export default function AppShell() {
       <ExportModal />
       <HelpModal />
       <GlossaryModal />
+      <TemplateGallery />
       <MobileBlockSelector />
 
       {state.ui.showResetConfirm && (
