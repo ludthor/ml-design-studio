@@ -16,7 +16,7 @@ export default function CategoryCanvas() {
 
   return (
     <div
-      className="flex-1 overflow-auto p-4 bg-slate-50 relative flex flex-col"
+      className="flex-1 overflow-auto p-2 sm:p-4 bg-slate-50 relative flex flex-col"
       id="design-canvas"
       onClick={() => {
         dispatch({ type: 'SELECT_BLOCK', id: null });
@@ -65,7 +65,7 @@ export default function CategoryCanvas() {
         </div>
       )}
 
-      <div className="grid grid-cols-4 grid-rows-2 gap-3 min-w-[900px] flex-1 min-h-0">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2 gap-3 flex-1 min-h-0">
         {CATEGORIES.map((cat) => (
           <CategoryPanel key={cat.id} category={cat} />
         ))}

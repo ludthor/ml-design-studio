@@ -26,7 +26,7 @@ export default function CategoryPanel({ category }: { category: CategoryDef }) {
   return (
     <div
       ref={setNodeRef}
-      className={`flex flex-col rounded-xl border transition-all min-h-[180px] h-full ${
+      className={`flex flex-col rounded-xl border transition-all min-h-[120px] sm:min-h-[150px] lg:min-h-[180px] h-full ${
         isOver
           ? 'border-blue-300 bg-blue-50/50 shadow-inner'
           : 'border-slate-200 bg-white'

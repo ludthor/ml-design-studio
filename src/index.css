@@ -63,6 +63,20 @@ body {
   position: absolute;
   z-index: 10;
 }
+/* On touch devices (no hover), always show anchors */
+@media (hover: none) {
+  .connection-anchor {
+    opacity: 1 !important;
+    width: 14px;
+    height: 14px;
+  }
+  .connection-anchor.right {
+    right: -7px;
+  }
+  .connection-anchor.left {
+    left: -7px;
+  }
+}
 .connection-anchor:hover,
 .connection-anchor.active {
   background: #3b82f6;
@@ -164,4 +178,27 @@ body {
 @keyframes popoverIn {
   from { opacity: 0; transform: translateX(-50%) translateY(4px); }
   to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Hide popover on touch devices — not useful without hover */
+@media (hover: none) {
+  .block-popover {
+    display: none !important;
+  }
+}
+
+/* Mobile drawer/sheet animations */
+.animate-slide-in-left {
+  animation: slideInLeft 0.2s ease;
+}
+.animate-slide-in-bottom {
+  animation: slideInBottom 0.25s ease;
+}
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+@keyframes slideInBottom {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }

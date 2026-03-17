@@ -44,6 +44,8 @@ export interface UIState {
   showSummary: boolean;
   showValidation: boolean;
   showResetConfirm: boolean;
+  showMobileSidebar: boolean;
+  showMobileInspector: boolean;
 }
 
 export interface CategoryDef {

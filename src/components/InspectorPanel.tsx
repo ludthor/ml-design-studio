@@ -3,11 +3,12 @@ import { CATEGORY_MAP } from '../data/categories';
 import type { Block } from '../types';
 import { Trash2, Copy, X } from 'lucide-react';
 
-export default function InspectorPanel() {
+export default function InspectorPanel({ mobile }: { mobile?: boolean }) {
   const { dispatch, getSelectedBlock } = useProject();
   const block = getSelectedBlock();
 
   if (!block) {
+    if (mobile) return null;
     return (
       <aside className="w-[280px] bg-white border-l border-slate-200 flex flex-col shrink-0">
         <div className="p-4 border-b border-slate-100">
@@ -29,8 +30,15 @@ export default function InspectorPanel() {
   const update = (updates: Partial<Block>) =>
     dispatch({ type: 'UPDATE_BLOCK', id: block.id, updates });
 
+  const closeAction = mobile
+    ? () => dispatch({ type: 'TOGGLE_UI', key: 'showMobileInspector', value: false })
+    : () => dispatch({ type: 'SELECT_BLOCK', id: null });
+
   return (
-    <aside className="w-[280px] bg-white border-l border-slate-200 flex flex-col shrink-0 overflow-hidden">
+    <aside className={mobile
+      ? 'bg-white rounded-t-2xl flex flex-col overflow-hidden'
+      : 'w-[280px] bg-white border-l border-slate-200 flex flex-col shrink-0 overflow-hidden'
+    }>
       {/* Header */}
       <div className="p-3 border-b border-slate-100 flex items-center justify-between">
         <div className="flex items-center gap-2 min-w-0">
@@ -43,7 +51,7 @@ export default function InspectorPanel() {
           </h2>
         </div>
         <button
-          onClick={() => dispatch({ type: 'SELECT_BLOCK', id: null })}
+          onClick={closeAction}
           className="text-slate-400 hover:text-slate-600 cursor-pointer"
         >
           <X size={14} />

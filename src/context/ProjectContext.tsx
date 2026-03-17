@@ -42,6 +42,8 @@ const defaultUI: UIState = {
   showSummary: false,
   showValidation: false,
   showResetConfirm: false,
+  showMobileSidebar: false,
+  showMobileInspector: false,
 };
 
 function loadFromStorage(): Project | null {
@@ -216,7 +218,14 @@ function reducer(state: AppState, action: Action): AppState {
       });
 
     case 'SELECT_BLOCK':
-      return { ...state, ui: { ...state.ui, selectedBlockId: action.id } };
+      return {
+        ...state,
+        ui: {
+          ...state.ui,
+          selectedBlockId: action.id,
+          showMobileInspector: action.id !== null ? true : state.ui.showMobileInspector,
+        },
+      };
 
     case 'SET_CONNECTION_SOURCE':
       return { ...state, ui: { ...state.ui, connectionSource: action.id } };
