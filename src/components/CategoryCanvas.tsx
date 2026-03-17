@@ -2,15 +2,17 @@ import { CATEGORIES } from '../data/categories';
 import CategoryPanel from './CategoryPanel';
 import ConnectionLayer from './ConnectionLayer';
 import { useProject } from '../context/ProjectContext';
-import { ArrowRightLeft, GripVertical, MousePointerClick } from 'lucide-react';
+import { ArrowRightLeft, GripVertical, MousePointerClick, X } from 'lucide-react';
+import { useState } from 'react';
 
 export default function CategoryCanvas() {
   const { state, dispatch } = useProject();
+  const [welcomeDismissed, setWelcomeDismissed] = useState(false);
 
   const hasBlocks = state.project.blocks.length > 0;
   const hasConnections = state.project.connections.length > 0;
   const showConnectionHint = hasBlocks && !hasConnections && !state.ui.connectionSource;
-  const showWelcome = !hasBlocks;
+  const showWelcome = !hasBlocks && !welcomeDismissed;
 
   return (
     <div
@@ -24,7 +26,14 @@ export default function CategoryCanvas() {
       {/* Welcome overlay for empty canvas */}
       {showWelcome && (
         <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-          <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-200 shadow-sm px-8 py-6 max-w-md text-center">
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-200 shadow-sm px-8 py-6 max-w-md text-center relative">
+            <button
+              onClick={() => setWelcomeDismissed(true)}
+              className="absolute top-3 right-3 text-slate-300 hover:text-slate-500 transition-colors cursor-pointer pointer-events-auto"
+              title="Dismiss"
+            >
+              <X size={14} />
+            </button>
             <h2 className="text-base font-semibold text-slate-700 mb-2">
               Welcome to the ML Design Studio
             </h2>
