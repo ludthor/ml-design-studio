@@ -1,7 +1,7 @@
 import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { useProject } from '../context/ProjectContext';
 import { CATEGORY_MAP } from '../data/categories';
-import { ArrowRight, ArrowLeft } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Trash2, Copy, Pencil } from 'lucide-react';
 import type { Block } from '../types';
 
 export default function DesignBlock({ block }: { block: Block }) {
@@ -160,6 +160,42 @@ export default function DesignBlock({ block }: { block: Block }) {
         <div className="block-popover">
           <div className="font-medium text-slate-700 mb-0.5">{block.label}</div>
           <div className="text-slate-500">{block.description}</div>
+        </div>
+      )}
+
+      {/* Mobile quick actions — visible when selected */}
+      {isSelected && (
+        <div className="lg:hidden flex items-center gap-1 mt-1.5 pl-3">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              dispatch({ type: 'TOGGLE_UI', key: 'showMobileInspector', value: true });
+            }}
+            className="flex items-center gap-1 px-2 py-1 text-[10px] font-medium text-slate-500 bg-slate-100 rounded-md active:bg-slate-200 cursor-pointer"
+          >
+            <Pencil size={10} />
+            Edit
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              dispatch({ type: 'DUPLICATE_BLOCK', id: block.id });
+            }}
+            className="flex items-center gap-1 px-2 py-1 text-[10px] font-medium text-slate-500 bg-slate-100 rounded-md active:bg-slate-200 cursor-pointer"
+          >
+            <Copy size={10} />
+            Copy
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              dispatch({ type: 'DELETE_BLOCK', id: block.id });
+            }}
+            className="flex items-center gap-1 px-2 py-1 text-[10px] font-medium text-red-500 bg-red-50 rounded-md active:bg-red-100 cursor-pointer"
+          >
+            <Trash2 size={10} />
+            Delete
+          </button>
         </div>
       )}
 

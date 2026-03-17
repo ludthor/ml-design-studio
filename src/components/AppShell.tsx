@@ -53,7 +53,7 @@ export default function AppShell() {
               className="absolute inset-0 bg-black/30"
               onClick={() => dispatch({ type: 'TOGGLE_UI', key: 'showMobileInspector', value: false })}
             />
-            <div className="relative z-10 w-full max-h-[70vh] animate-slide-in-bottom">
+            <div className="relative z-10 w-full max-h-[70vh] overflow-hidden animate-slide-in-bottom">
               <InspectorPanel mobile />
             </div>
           </div>

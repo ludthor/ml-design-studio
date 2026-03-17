@@ -138,8 +138,8 @@ export default function InspectorPanel({ mobile }: { mobile?: boolean }) {
         )}
       </div>
 
-      {/* Actions */}
-      <div className="p-3 border-t border-slate-100 flex gap-2">
+      {/* Actions — sticky at bottom */}
+      <div className="p-3 border-t border-slate-100 flex gap-2 shrink-0 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <button
           onClick={() => dispatch({ type: 'DUPLICATE_BLOCK', id: block.id })}
           className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-600 bg-slate-50 rounded-md hover:bg-slate-100 transition-colors cursor-pointer"

@@ -225,7 +225,6 @@ function reducer(state: AppState, action: Action): AppState {
         ui: {
           ...state.ui,
           selectedBlockId: action.id,
-          showMobileInspector: action.id !== null ? true : state.ui.showMobileInspector,
         },
       };
 
