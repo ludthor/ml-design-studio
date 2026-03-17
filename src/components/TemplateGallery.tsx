@@ -64,6 +64,13 @@ export default function TemplateGallery() {
           </button>
         </div>
 
+        {/* ─── Description ──────────────────────────────────── */}
+        <div className="px-4 pt-2.5 pb-1 flex-shrink-0">
+          <p className="text-[11px] text-slate-400 leading-relaxed">
+            Start from a pre-built ML project to explore how a complete pipeline fits together. Each template includes blocks with filled rationale, connections, and covers all 8 design categories — load one and customize it to learn by example.
+          </p>
+        </div>
+
         {/* ─── Body ────────────────────────────────────────────── */}
         <div className="overflow-y-auto flex-1 p-4">
           {/* Mobile: preview detail replaces list */}

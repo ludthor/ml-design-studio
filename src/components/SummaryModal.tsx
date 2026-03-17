@@ -49,6 +49,9 @@ export default function SummaryModal() {
               <h2 className="text-lg font-bold truncate">
                 {project.projectTitle || 'Untitled Project'}
               </h2>
+              <p className="text-[11px] text-slate-400/80 mt-1 leading-relaxed">
+                A structured overview of every block, connection, and design decision in your pipeline — useful for documenting and sharing your ML project design.
+              </p>
               <div className="flex items-center gap-4 mt-2 text-[11px] text-slate-400">
                 <span className="flex items-center gap-1">
                   <Calendar size={10} />

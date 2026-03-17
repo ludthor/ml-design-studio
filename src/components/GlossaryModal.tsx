@@ -47,6 +47,13 @@ export default function GlossaryModal() {
           </button>
         </div>
 
+        {/* Description */}
+        <div className="px-4 pt-2.5 pb-1">
+          <p className="text-[11px] text-slate-400 leading-relaxed">
+            Look up key ML concepts, techniques, and best practices. Each term includes a definition, a practical insight, and common pitfalls to avoid.
+          </p>
+        </div>
+
         {/* Search */}
         <div className="px-4 py-3 border-b border-slate-100">
           <div className="relative">

@@ -55,9 +55,12 @@ export default function ValidationPanel() {
     <div className="border-t border-slate-200 bg-white">
       {/* Tab bar */}
       <div className="flex items-center border-b border-slate-100">
-        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 py-2 shrink-0">
+        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 py-2 shrink-0" title="Evaluate your ML pipeline design with a rubric score, validation checks, and contextual tips.">
           Design Review
         </h3>
+        <span className="hidden md:inline text-[10px] text-slate-400 shrink-0 mr-2 max-w-[260px] leading-tight" title="Evaluate your ML pipeline design with a rubric score, validation checks, and contextual tips.">
+          Score, validate, and improve your pipeline design
+        </span>
         <div className="flex items-center gap-0.5 ml-auto pr-2">
           {tabs.map((t) => (
             <button
