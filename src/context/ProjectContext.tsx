@@ -46,6 +46,7 @@ const defaultUI: UIState = {
   showMobileInspector: false,
   showGlossary: false,
   showTemplates: false,
+  showAssessment: false,
   mobileSelectorCategory: null,
 };
 

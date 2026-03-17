@@ -11,6 +11,7 @@ import {
   X,
   BookOpen,
   LayoutTemplate,
+  ClipboardCheck,
 } from 'lucide-react';
 import { CATEGORIES } from '../data/categories';
 import { useState } from 'react';
@@ -112,6 +113,11 @@ export default function TopBar() {
           onClick={() => dispatch({ type: 'TOGGLE_UI', key: 'showTemplates', value: true })}
         />
         <ToolbarBtn
+          icon={<ClipboardCheck size={16} />}
+          label="Assess"
+          onClick={() => dispatch({ type: 'TOGGLE_UI', key: 'showAssessment', value: true })}
+        />
+        <ToolbarBtn
           icon={<RotateCcw size={16} />}
           label="Reset"
           onClick={() => dispatch({ type: 'TOGGLE_UI', key: 'showResetConfirm', value: true })}
@@ -146,6 +152,7 @@ export default function TopBar() {
               <MobileMenuItem icon={<Download size={14} />} label="Export" onClick={() => { dispatch({ type: 'TOGGLE_UI', key: 'showExport', value: true }); setMobileMenuOpen(false); }} />
               <MobileMenuItem icon={<BookOpen size={14} />} label="Glossary" onClick={() => { dispatch({ type: 'TOGGLE_UI', key: 'showGlossary', value: true }); setMobileMenuOpen(false); }} />
               <MobileMenuItem icon={<LayoutTemplate size={14} />} label="Templates" onClick={() => { dispatch({ type: 'TOGGLE_UI', key: 'showTemplates', value: true }); setMobileMenuOpen(false); }} />
+              <MobileMenuItem icon={<ClipboardCheck size={14} />} label="Assess" onClick={() => { dispatch({ type: 'TOGGLE_UI', key: 'showAssessment', value: true }); setMobileMenuOpen(false); }} />
               <MobileMenuItem icon={<HelpCircle size={14} />} label="Help" onClick={() => { dispatch({ type: 'TOGGLE_UI', key: 'showHelp', value: true }); setMobileMenuOpen(false); }} />
               <div className="border-t border-slate-100 my-1" />
               <MobileMenuItem icon={<RotateCcw size={14} />} label="Reset" onClick={() => { dispatch({ type: 'TOGGLE_UI', key: 'showResetConfirm', value: true }); setMobileMenuOpen(false); }} danger />
