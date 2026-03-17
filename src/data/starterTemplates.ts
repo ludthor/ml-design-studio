@@ -303,7 +303,7 @@ export const STARTER_TEMPLATES: StarterTemplate[] = [
     tags: ['Embeddings', 'Ensemble', 'Real-time'],
     icon: '🎯',
     accentColor: '#10b981',
-    blockCount: 21,
+    blockCount: 20,
     build: buildRecommendation,
   },
   {
@@ -329,7 +329,7 @@ export const STARTER_TEMPLATES: StarterTemplate[] = [
     tags: ['Autoencoder', 'Real-time', 'Security'],
     icon: '🛡️',
     accentColor: '#ef4444',
-    blockCount: 23,
+    blockCount: 24,
     build: buildAnomalyDetection,
   },
 ];
