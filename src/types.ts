@@ -49,6 +49,7 @@ export interface UIState {
   showGlossary: boolean;
   showTemplates: boolean;
   showAssessment: boolean;
+  showFlowDiagram: boolean;
   mobileSelectorCategory: CategoryId | null;
 }
 

@@ -19,7 +19,8 @@ An interactive educational tool for visually designing Machine Learning project 
 - **92 Predefined Blocks** — each with educational descriptions, organized across the 8 pipeline stages
 - **Custom Blocks** — create blocks with arbitrary labels in any category
 - **Drag & Drop** — drag blocks from the library into category panels; move blocks between categories
-- **Visual Connections** — click anchors on blocks to draw directed Bézier arrows showing data/logic flow
+- **Visual Connections** — click anchors on blocks to draw directed Bézier arrows showing data/logic flow; connected blocks highlight when selected
+- **Pipeline Flow Diagram** — category-level flow visualization showing connection density between pipeline stages, with expected-flow ghost edges, isolated-stage warnings, and interactive node filtering
 - **Inspector Panel** — edit labels, descriptions, rationale, tags, and style variants per block, with inline glossary insights
 - **Block Duplication** — clone any block with one click
 
@@ -108,6 +109,7 @@ src/
 │   ├── CategoryPanel.tsx           # Individual category drop zones
 │   ├── DesignBlock.tsx             # Draggable block with connection anchors
 │   ├── ConnectionLayer.tsx         # SVG Bézier arrow renderer
+│   ├── FlowDiagramModal.tsx        # Category-level pipeline flow diagram
 │   ├── InspectorPanel.tsx          # Block editor with glossary integration
 │   ├── ValidationPanel.tsx         # Score, checks & tips (3-tab panel)
 │   ├── SummaryModal.tsx            # Visual project summary

@@ -12,6 +12,7 @@ import {
   BookOpen,
   LayoutTemplate,
   ClipboardCheck,
+  Workflow,
 } from 'lucide-react';
 import { CATEGORIES } from '../data/categories';
 import { useState } from 'react';
@@ -98,6 +99,11 @@ export default function TopBar() {
           onClick={() => dispatch({ type: 'TOGGLE_UI', key: 'showSummary', value: true })}
         />
         <ToolbarBtn
+          icon={<Workflow size={16} />}
+          label="Flow"
+          onClick={() => dispatch({ type: 'TOGGLE_UI', key: 'showFlowDiagram', value: true })}
+        />
+        <ToolbarBtn
           icon={<Download size={16} />}
           label="Export"
           onClick={() => dispatch({ type: 'TOGGLE_UI', key: 'showExport', value: true })}
@@ -149,6 +155,7 @@ export default function TopBar() {
             <div className="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-xl border border-slate-200 py-1 z-50 min-w-[160px] animate-slide-in-bottom">
               <MobileMenuItem icon={<CheckSquare size={14} />} label="Checks" onClick={() => { dispatch({ type: 'TOGGLE_UI', key: 'showValidation' }); setMobileMenuOpen(false); }} />
               <MobileMenuItem icon={<FileText size={14} />} label="Summary" onClick={() => { dispatch({ type: 'TOGGLE_UI', key: 'showSummary', value: true }); setMobileMenuOpen(false); }} />
+              <MobileMenuItem icon={<Workflow size={14} />} label="Pipeline Flow" onClick={() => { dispatch({ type: 'TOGGLE_UI', key: 'showFlowDiagram', value: true }); setMobileMenuOpen(false); }} />
               <MobileMenuItem icon={<Download size={14} />} label="Export" onClick={() => { dispatch({ type: 'TOGGLE_UI', key: 'showExport', value: true }); setMobileMenuOpen(false); }} />
               <MobileMenuItem icon={<BookOpen size={14} />} label="Glossary" onClick={() => { dispatch({ type: 'TOGGLE_UI', key: 'showGlossary', value: true }); setMobileMenuOpen(false); }} />
               <MobileMenuItem icon={<LayoutTemplate size={14} />} label="Templates" onClick={() => { dispatch({ type: 'TOGGLE_UI', key: 'showTemplates', value: true }); setMobileMenuOpen(false); }} />

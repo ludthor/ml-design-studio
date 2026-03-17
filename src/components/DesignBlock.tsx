@@ -10,6 +10,17 @@ export default function DesignBlock({ block }: { block: Block }) {
   const isSelected = state.ui.selectedBlockId === block.id;
   const isConnectionSource = state.ui.connectionSource === block.id;
 
+  // Check if this block is connected to the currently selected block
+  const selectedId = state.ui.selectedBlockId;
+  const isConnectedToSelected =
+    !isSelected &&
+    selectedId !== null &&
+    state.project.connections.some(
+      (c) =>
+        (c.sourceBlockId === selectedId && c.targetBlockId === block.id) ||
+        (c.targetBlockId === selectedId && c.sourceBlockId === block.id),
+    );
+
   // Get connected blocks for mobile pills
   const outgoing = state.project.connections
     .filter((c) => c.sourceBlockId === block.id)
@@ -77,13 +88,18 @@ export default function DesignBlock({ block }: { block: Block }) {
       className={`group relative px-2.5 py-1.5 rounded-lg border text-xs cursor-pointer transition-all select-none ${styleClasses} ${
         isSelected
           ? 'ring-2 ring-blue-400 ring-offset-1 shadow-md'
-          : 'hover:shadow-sm'
+          : isConnectedToSelected
+            ? 'ring-2 ring-offset-1 shadow-sm'
+            : 'hover:shadow-sm'
       } ${isConnectionSource ? 'ring-2 ring-green-400 ring-offset-1' : ''} ${
         isDragging ? 'opacity-30' : ''
       }`}
       style={{
         backgroundColor: isSelected ? cat?.lightBg : 'white',
         borderColor: isSelected ? cat?.color : cat?.borderColor,
+        ...(isConnectedToSelected && cat
+          ? { '--tw-ring-color': cat.color + '80' } as React.CSSProperties
+          : {}),
       }}
       onClick={handleClick}
       {...listeners}

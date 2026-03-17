@@ -11,6 +11,7 @@ import MobileBlockSelector from './MobileBlockSelector';
 import GlossaryModal from './GlossaryModal';
 import TemplateGallery from './TemplateGallery';
 import AssessmentReportModal from './AssessmentReportModal';
+import FlowDiagramModal from './FlowDiagramModal';
 import { useProject } from '../context/ProjectContext';
 
 export default function AppShell() {
@@ -70,6 +71,7 @@ export default function AppShell() {
       <GlossaryModal />
       <TemplateGallery />
       <AssessmentReportModal />
+      <FlowDiagramModal />
       <MobileBlockSelector />
 
       {state.ui.showResetConfirm && (
