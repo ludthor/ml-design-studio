@@ -9,6 +9,7 @@ import {
 } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import type { Block, Connection, Project, CategoryId, UIState } from '../types';
+import { validateProject } from '../utils/importUtils';
 
 // ─── State ───────────────────────────────────────────────────────────────────
 
@@ -55,7 +56,8 @@ function loadFromStorage(): Project | null {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
-    return JSON.parse(raw) as Project;
+    const data = JSON.parse(raw);
+    return validateProject(data);
   } catch {
     return null;
   }

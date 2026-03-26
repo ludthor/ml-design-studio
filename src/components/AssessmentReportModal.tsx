@@ -13,6 +13,7 @@ import {
   CheckCircle2,
   Lightbulb,
 } from 'lucide-react';
+import { slugify } from '../utils/exportUtils';
 
 type Tab = 'overview' | 'rubric' | 'rationale' | 'checks';
 
@@ -30,9 +31,13 @@ export default function AssessmentReportModal() {
     dispatch({ type: 'TOGGLE_UI', key: 'showAssessment', value: false });
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(plainText);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(plainText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard API may be blocked in some contexts
+    }
   };
 
   const handleDownload = () => {
@@ -40,7 +45,7 @@ export default function AssessmentReportModal() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${state.project.projectTitle.replace(/[^a-zA-Z0-9]/g, '-')}-assessment.txt`;
+    a.download = `${slugify(state.project.projectTitle)}-assessment.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

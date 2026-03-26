@@ -126,7 +126,7 @@ export default function ConnectionLayer() {
     const handleUpdate = () => recalc();
     container?.addEventListener('scroll', handleUpdate);
     window.addEventListener('resize', handleUpdate);
-    const interval = setInterval(recalc, 500);
+    const interval = setInterval(() => { if (!document.hidden) recalc(); }, 500);
     return () => {
       container?.removeEventListener('scroll', handleUpdate);
       window.removeEventListener('resize', handleUpdate);

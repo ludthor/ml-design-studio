@@ -19,9 +19,13 @@ export default function SummaryModal() {
   ).length;
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(plainText);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(plainText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard API may be blocked in some contexts
+    }
   };
 
   const close = () =>

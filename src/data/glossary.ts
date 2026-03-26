@@ -52,6 +52,26 @@ export const GLOSSARY: GlossaryEntry[] = [
       'Many forecasting models struggle with regime changes (events that change the underlying pattern). Always test on recent data, not just random holdouts.',
     related: ['Time series', 'LSTM', 'RNN', 'MAE', 'RMSE'],
   },
+  {
+    term: 'Reinforcement learning',
+    definition:
+      'A paradigm where an agent learns to make sequential decisions by interacting with an environment and receiving rewards or penalties.',
+    keyInsight:
+      'Unlike supervised learning, RL does not need labeled data — it learns from experience. The key challenge is the exploration-exploitation trade-off: trying new actions vs. exploiting known good ones.',
+    pitfalls:
+      'RL is notoriously sample-inefficient and hard to train. Reward shaping is critical — a poorly designed reward function leads to unexpected and undesirable agent behavior.',
+    related: ['RL agent', 'Compute cost', 'Data scarcity'],
+  },
+  {
+    term: 'Sequence-to-sequence',
+    definition:
+      'A task that transforms one variable-length sequence into another — used in translation, summarization, speech-to-text, and code generation.',
+    keyInsight:
+      'Seq2seq architectures use an encoder to compress the input and a decoder to generate the output token by token. Attention mechanisms dramatically improved quality by letting the decoder focus on relevant input parts.',
+    pitfalls:
+      'Long sequences are challenging — the model can lose context. Beam search decoding is common but can produce repetitive or generic output.',
+    related: ['Transformer', 'LSTM', 'BLEU / ROUGE', 'Text'],
+  },
 
   // ── Data Sources ────────────────────────────────────────────────────────
   {
@@ -81,6 +101,16 @@ export const GLOSSARY: GlossaryEntry[] = [
     pitfalls:
       'Different modalities may have different noise levels, sampling rates, and missing-data patterns. Preprocessing each modality appropriately is critical.',
     related: ['Embedding', 'Transformer', 'Feature extraction'],
+  },
+  {
+    term: 'Synthetic data',
+    definition:
+      'Artificially generated data that mimics the statistical properties of real data, used when real data is scarce, sensitive, or expensive.',
+    keyInsight:
+      'Synthetic data can unlock ML in privacy-sensitive domains (healthcare, finance) and help address class imbalance. GANs, diffusion models, and rule-based generators are common approaches.',
+    pitfalls:
+      'Synthetic data is only as good as the model that generates it. If the generator misses important patterns, the downstream model will inherit those blind spots.',
+    related: ['GAN', 'Diffusion model', 'Data scarcity', 'Privacy'],
   },
 
   // ── Preprocessing ───────────────────────────────────────────────────────
@@ -152,7 +182,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       'The test set is sacred — you should evaluate on it only once, at the very end. If you tune on test data, your reported performance is overly optimistic.',
     pitfalls:
       'Random splits can fail for time series (temporal leakage) or grouped data (same patient in train and test). Always think about what kind of split is appropriate.',
-    related: ['Cross-validation', 'Overfitting', 'Evaluation'],
+    related: ['Cross-validation', 'Overfitting', 'Data leakage'],
   },
   {
     term: 'Embedding',
@@ -204,6 +234,16 @@ export const GLOSSARY: GlossaryEntry[] = [
       'PCA is linear and may miss nonlinear structure. t-SNE/UMAP are great for visualization but should not be used to generate features for downstream models.',
     related: ['Feature extraction', 'Standardization', 'Autoencoder'],
   },
+  {
+    term: 'Feature selection',
+    definition:
+      'Choosing the most informative subset of features from the available set, removing redundant or irrelevant variables.',
+    keyInsight:
+      'Feature selection reduces overfitting, speeds up training, and improves interpretability. Methods range from simple correlation filtering to model-based importance (e.g. permutation importance, LASSO).',
+    pitfalls:
+      'Selecting features on the full dataset (including test data) causes data leakage. Always perform feature selection within cross-validation folds.',
+    related: ['Feature extraction', 'Dimensionality reduction', 'Regularization'],
+  },
 
   // ── Modeling ────────────────────────────────────────────────────────────
   {
@@ -212,7 +252,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       'A simple, often non-ML benchmark (majority vote, mean prediction, random guess) used as a sanity check.',
     keyInsight:
       'If your complex deep learning model cannot beat a baseline, something is wrong with your data, pipeline, or task definition. Always start here.',
-    related: ['Linear model', 'Evaluation', 'Error analysis'],
+    related: ['Linear model', 'Error analysis', 'Accuracy'],
   },
   {
     term: 'CNN',
@@ -263,6 +303,56 @@ export const GLOSSARY: GlossaryEntry[] = [
     pitfalls:
       'A powerful autoencoder that perfectly reconstructs everything has not learned useful features — it may have just memorized. Add bottleneck or noise for useful compression.',
     related: ['Dimensionality reduction', 'Unlabeled data', 'Detection'],
+  },
+  {
+    term: 'SVM',
+    definition:
+      'Support Vector Machine — finds the hyperplane that maximizes the margin between classes, with kernel tricks for nonlinear boundaries.',
+    keyInsight:
+      'SVMs excel on medium-sized datasets with clear class separation. The kernel trick lets them handle nonlinear data without explicitly computing high-dimensional features.',
+    pitfalls:
+      'SVMs do not scale well to very large datasets (training is O(n²) to O(n³)). They also require careful feature scaling and kernel/parameter selection.',
+    related: ['Classification', 'Normalization', 'Linear model'],
+  },
+  {
+    term: 'KNN',
+    definition:
+      'K-Nearest Neighbors — classifies a data point by the majority vote of its K closest neighbors in feature space.',
+    keyInsight:
+      'KNN is a non-parametric, instance-based method — it stores all training data and makes predictions at query time. No training phase, but inference scales with dataset size.',
+    pitfalls:
+      'KNN suffers from the curse of dimensionality — distance metrics become less meaningful in high dimensions. It is also sensitive to irrelevant features and feature scaling.',
+    related: ['Classification', 'Normalization', 'Dimensionality reduction'],
+  },
+  {
+    term: 'GAN',
+    definition:
+      'Generative Adversarial Network — a generator creates fake samples while a discriminator tries to distinguish them from real ones; both improve through competition.',
+    keyInsight:
+      'The adversarial training dynamic pushes the generator toward producing increasingly realistic output. GANs revolutionized image generation and are used for data augmentation, style transfer, and super-resolution.',
+    pitfalls:
+      'GANs are notoriously hard to train — mode collapse (generator producing limited variety) and training instability are common. Careful architecture design and hyperparameter tuning are essential.',
+    related: ['Generation', 'Diffusion model', 'Synthetic data'],
+  },
+  {
+    term: 'Diffusion model',
+    definition:
+      'A generative model that learns to reverse a gradual noising process, iteratively denoising random noise into structured output.',
+    keyInsight:
+      'Diffusion models (DDPM, Stable Diffusion, DALL-E) produce higher-quality and more diverse output than GANs, with more stable training. They now dominate image, audio, and video generation.',
+    pitfalls:
+      'Inference is slow due to iterative denoising (hundreds of steps). Distillation and faster samplers help but add complexity.',
+    related: ['Generation', 'GAN', 'Compute cost'],
+  },
+  {
+    term: 'Foundation model / LLM',
+    definition:
+      'A large model pre-trained on massive data (GPT, BERT, LLaMA, PaLM) that can be adapted to many downstream tasks via fine-tuning or prompting.',
+    keyInsight:
+      'Foundation models are the most significant shift in ML practice — instead of training task-specific models from scratch, you adapt a general-purpose model. This dramatically reduces data and compute for downstream tasks.',
+    pitfalls:
+      'Foundation models can hallucinate, amplify biases in pre-training data, and are expensive to run. Understanding their limitations is as important as leveraging their capabilities.',
+    related: ['Transfer learning', 'Fine-tuning', 'Prompt engineering', 'Hallucination'],
   },
 
   // ── Training & Optimization ─────────────────────────────────────────────
@@ -315,6 +405,16 @@ export const GLOSSARY: GlossaryEntry[] = [
     pitfalls:
       'Too high a learning rate during fine-tuning destroys the pre-trained features (catastrophic forgetting). Start with 1/10th to 1/100th of the original training rate.',
     related: ['Transfer learning', 'Learning rate tuning', 'Transformer'],
+  },
+  {
+    term: 'Prompt engineering',
+    definition:
+      'Designing effective input prompts to steer foundation model behavior without modifying model weights.',
+    keyInsight:
+      'Prompt engineering is the fastest way to adapt an LLM — no training required. Techniques include zero-shot, few-shot examples, chain-of-thought, and system instructions.',
+    pitfalls:
+      'Prompts are brittle — small changes can dramatically alter output. Results are hard to reproduce and evaluate systematically. For consistent production use, fine-tuning is often more reliable.',
+    related: ['Foundation model / LLM', 'Fine-tuning', 'Generation'],
   },
 
   // ── Evaluation ──────────────────────────────────────────────────────────
@@ -370,6 +470,26 @@ export const GLOSSARY: GlossaryEntry[] = [
       'Error analysis is where real learning happens — both for the model and for you. Look for patterns: does the model fail on short texts? Blurry images? Rare classes?',
     related: ['Confusion matrix', 'Robustness check', 'Fairness check'],
   },
+  {
+    term: 'BLEU / ROUGE',
+    definition:
+      'Standard metrics for evaluating generated text: BLEU measures n-gram precision (translation), ROUGE measures n-gram recall (summarization).',
+    keyInsight:
+      'These metrics compare generated text against reference texts. They are fast and automated, making them useful for development iteration, but they correlate imperfectly with human judgment.',
+    pitfalls:
+      'High BLEU/ROUGE does not guarantee good output — a paraphrase with different words scores low even if perfectly correct. Always complement with human evaluation for generative tasks.',
+    related: ['Human evaluation', 'Sequence-to-sequence', 'Generation'],
+  },
+  {
+    term: 'A/B testing',
+    definition:
+      'Comparing two system variants (A and B) by randomly exposing different user groups to each and measuring the impact on key metrics.',
+    keyInsight:
+      'A/B testing is the gold standard for measuring real-world impact. Offline metrics (accuracy, F1) only estimate potential — actual business value can only be measured with live users.',
+    pitfalls:
+      'A/B tests need sufficient sample size for statistical significance. Running too many simultaneous tests or peeking at results early leads to false conclusions.',
+    related: ['Human evaluation', 'Monitoring', 'Dashboard'],
+  },
 
   // ── Output & Deployment ─────────────────────────────────────────────────
   {
@@ -391,6 +511,16 @@ export const GLOSSARY: GlossaryEntry[] = [
     pitfalls:
       'Not every application needs real-time. Batch processing (predictions computed periodically) is simpler and cheaper for many use cases.',
     related: ['API', 'Latency', 'Edge deployment'],
+  },
+  {
+    term: 'Monitoring',
+    definition:
+      'Tracking model performance, data distributions, and system health in production to detect degradation before it causes harm.',
+    keyInsight:
+      'Models degrade silently — accuracy can drop without any visible error. Monitoring input distributions, prediction distributions, and business metrics creates an early warning system.',
+    pitfalls:
+      'Monitoring without action is useless. Define clear alerting thresholds and have a retraining or rollback plan ready before deployment.',
+    related: ['Domain shift', 'Maintenance', 'A/B testing'],
   },
 
   // ── Risks & Constraints ─────────────────────────────────────────────────
@@ -450,7 +580,47 @@ export const GLOSSARY: GlossaryEntry[] = [
       'Domain shift is inevitable over time — user behavior changes, environments change, language evolves. Plan for monitoring and retraining from day one.',
     pitfalls:
       'A model performing well on a test set from 2023 may fail on data from 2025. Always evaluate on the most recent data available.',
-    related: ['Robustness check', 'Maintenance', 'Evaluation'],
+    related: ['Robustness check', 'Maintenance', 'Monitoring'],
+  },
+  {
+    term: 'Hallucination',
+    definition:
+      'When a generative model produces confident but factually incorrect, fabricated, or nonsensical content.',
+    keyInsight:
+      'Hallucination is not a bug but an inherent property of probabilistic generation — models produce statistically plausible output, not verified facts. Retrieval-augmented generation (RAG) and grounding help mitigate it.',
+    pitfalls:
+      'Hallucinations are especially dangerous because they look convincing. In high-stakes domains (healthcare, legal, finance), undetected hallucinations can cause real harm.',
+    related: ['Foundation model / LLM', 'Generation', 'Human evaluation'],
+  },
+  {
+    term: 'Data leakage',
+    definition:
+      'When information from outside the training set inadvertently leaks into the model, causing overly optimistic evaluation results.',
+    keyInsight:
+      'Data leakage is one of the most common and insidious ML mistakes. Sources include: using test data for preprocessing, temporal leakage in time series, and feature engineering on the full dataset.',
+    pitfalls:
+      'Leakage often goes undetected until deployment, when performance mysteriously drops. Always ask: "would this information be available at prediction time in production?"',
+    related: ['Train/validation/test split', 'Cross-validation', 'Feature selection'],
+  },
+  {
+    term: 'Regulatory compliance',
+    definition:
+      'Legal and regulatory requirements that constrain how ML systems collect data, make decisions, and impact individuals.',
+    keyInsight:
+      'Regulations like GDPR (data protection), HIPAA (health data), and the EU AI Act (risk-based AI rules) are not optional. Non-compliance can result in massive fines and reputational damage.',
+    pitfalls:
+      'Compliance is not a one-time checkbox — it requires ongoing documentation, auditing, and adaptation as regulations evolve. Legal review should be involved early in the project.',
+    related: ['Privacy', 'Bias', 'Interpretability', 'Fairness check'],
+  },
+  {
+    term: 'Environmental impact',
+    definition:
+      'The energy consumption, carbon emissions, and ecological cost of training and deploying ML models.',
+    keyInsight:
+      'Training a single large language model can emit as much CO₂ as five cars over their lifetimes. Responsible ML means choosing efficient architectures, reusing pre-trained models, and reporting compute costs.',
+    pitfalls:
+      'Environmental cost is often invisible to practitioners. Consider whether the performance gain from a larger model justifies its carbon footprint.',
+    related: ['Compute cost', 'Foundation model / LLM', 'Maintenance'],
   },
 ];
 

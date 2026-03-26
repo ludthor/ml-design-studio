@@ -12,6 +12,9 @@ export const BLOCK_LIBRARY: BlockTemplate[] = [
   { label: 'Segmentation', category: 'problem-framing', description: 'Divide an input into meaningful parts — e.g. image regions, sentence chunks.' },
   { label: 'Ranking', category: 'problem-framing', description: 'Order items by relevance or quality — e.g. search results, feed items.' },
   { label: 'Decision support', category: 'problem-framing', description: 'Help humans make better choices by surfacing data-driven insights.' },
+  { label: 'Reinforcement learning', category: 'problem-framing', description: 'Train an agent to make sequential decisions through trial and error — e.g. game playing, robotics, resource management.' },
+  { label: 'Sequence-to-sequence', category: 'problem-framing', description: 'Transform one sequence into another — e.g. translation, summarization, code generation, speech-to-text.' },
+  { label: 'Multi-label classification', category: 'problem-framing', description: 'Assign multiple labels to each input — e.g. tagging articles with topics, detecting multiple objects in an image.' },
 
   // ── Data Sources ────────────────────────────────────
   { label: 'Tabular data', category: 'data-sources', description: 'Rows & columns (CSV, databases) — the most common format for structured data.' },
@@ -26,6 +29,9 @@ export const BLOCK_LIBRARY: BlockTemplate[] = [
   { label: 'Unlabeled data', category: 'data-sources', description: 'Raw examples without annotations — used in unsupervised or self-supervised learning.' },
   { label: 'Public dataset', category: 'data-sources', description: 'Openly available datasets — e.g. Kaggle, UCI, HuggingFace, ImageNet.' },
   { label: 'Proprietary dataset', category: 'data-sources', description: 'Private or company-owned data — may require access agreements and privacy care.' },
+  { label: 'Graph / Network data', category: 'data-sources', description: 'Nodes and edges representing relationships — e.g. social networks, molecules, knowledge graphs.' },
+  { label: 'Synthetic data', category: 'data-sources', description: 'Artificially generated data for training — useful when real data is scarce, sensitive, or expensive to collect.' },
+  { label: 'Streaming data', category: 'data-sources', description: 'Continuous real-time data flows — e.g. social feeds, transaction logs, live sensor streams.' },
 
   // ── Preprocessing ───────────────────────────────────
   { label: 'Cleaning', category: 'preprocessing', description: 'Remove noise, fix typos, drop duplicates — garbage in, garbage out!' },
@@ -40,6 +46,9 @@ export const BLOCK_LIBRARY: BlockTemplate[] = [
   { label: 'Train/validation/test split', category: 'preprocessing', description: 'Divide data into three sets: train to learn, validate to tune, test to evaluate.' },
   { label: 'Balancing', category: 'preprocessing', description: 'Fix class imbalance via oversampling, undersampling, or SMOTE.' },
   { label: 'Dimensionality reduction', category: 'preprocessing', description: 'Reduce feature count with PCA or similar — fights the curse of dimensionality.' },
+  { label: 'Encoding (categorical)', category: 'preprocessing', description: 'Convert categorical variables into numbers — one-hot, label, or ordinal encoding.' },
+  { label: 'Feature selection', category: 'preprocessing', description: 'Choose the most relevant features and discard noisy or redundant ones to improve model performance.' },
+  { label: 'Outlier handling', category: 'preprocessing', description: 'Detect and treat extreme values that may distort model training — clip, remove, or transform.' },
 
   // ── Modeling ────────────────────────────────────────
   { label: 'Baseline model', category: 'modeling', description: 'A simple benchmark (e.g. majority vote, mean) to compare your real model against.' },
@@ -54,6 +63,12 @@ export const BLOCK_LIBRARY: BlockTemplate[] = [
   { label: 'GNN', category: 'modeling', description: 'Graph Neural Network — operates on graph-structured data like social networks or molecules.' },
   { label: 'Ensemble', category: 'modeling', description: 'Combine multiple models for better accuracy — bagging, boosting, or stacking.' },
   { label: 'Transfer learning', category: 'modeling', description: 'Reuse a model pre-trained on a large dataset, then fine-tune on your specific task.' },
+  { label: 'SVM', category: 'modeling', description: 'Support Vector Machine — finds optimal decision boundaries; effective for medium-sized datasets with clear margins.' },
+  { label: 'KNN', category: 'modeling', description: 'K-Nearest Neighbors — classifies by majority vote of nearest examples; simple, interpretable, no training phase.' },
+  { label: 'GAN', category: 'modeling', description: 'Generative Adversarial Network — two networks compete to produce realistic synthetic data, images, or audio.' },
+  { label: 'Diffusion model', category: 'modeling', description: 'Iteratively denoises random noise into structured output — state of the art for image and audio generation.' },
+  { label: 'RL agent', category: 'modeling', description: 'Reinforcement learning agent — learns policies through rewards and environment interaction (Q-learning, PPO, etc.).' },
+  { label: 'Foundation model / LLM', category: 'modeling', description: 'Large pre-trained model (GPT, BERT, LLaMA) adaptable to many downstream tasks via fine-tuning or prompting.' },
 
   // ── Training & Optimization ─────────────────────────
   { label: 'SGD', category: 'training-optimization', description: 'Stochastic Gradient Descent — the foundational optimizer, updates weights one batch at a time.' },
@@ -66,6 +81,9 @@ export const BLOCK_LIBRARY: BlockTemplate[] = [
   { label: 'Hyperparameter search', category: 'training-optimization', description: 'Systematically try different settings (grid, random, Bayesian) to find the best config.' },
   { label: 'Cross-validation', category: 'training-optimization', description: 'Rotate train/val splits to get a more reliable estimate of model performance.' },
   { label: 'Fine-tuning', category: 'training-optimization', description: 'Continue training a pre-trained model on your specific dataset with a small learning rate.' },
+  { label: 'Learning rate scheduling', category: 'training-optimization', description: 'Adjust learning rate during training — warmup, cosine annealing, step decay — for better convergence.' },
+  { label: 'Gradient clipping', category: 'training-optimization', description: 'Cap gradient magnitudes to prevent exploding gradients in deep or recurrent networks.' },
+  { label: 'Prompt engineering', category: 'training-optimization', description: 'Design effective input prompts to steer foundation model behavior without weight updates.' },
 
   // ── Evaluation ──────────────────────────────────────
   { label: 'Accuracy', category: 'evaluation', description: 'Percentage of correct predictions — simple but can be misleading with imbalanced classes.' },
@@ -80,6 +98,10 @@ export const BLOCK_LIBRARY: BlockTemplate[] = [
   { label: 'Robustness check', category: 'evaluation', description: 'Test how the model handles edge cases, noisy inputs, or distribution shifts.' },
   { label: 'Fairness check', category: 'evaluation', description: 'Verify the model doesn\'t discriminate across sensitive groups (gender, race, age).' },
   { label: 'Human evaluation', category: 'evaluation', description: 'Have people judge the output — essential for generative or subjective tasks.' },
+  { label: 'BLEU / ROUGE', category: 'evaluation', description: 'Standard metrics for generated text quality — used in translation, summarization, and dialogue evaluation.' },
+  { label: 'R² score', category: 'evaluation', description: 'Proportion of variance explained by the model — 1.0 is perfect, 0 means no better than predicting the mean.' },
+  { label: 'Log loss', category: 'evaluation', description: 'Measures how well predicted probabilities match true labels — heavily penalizes confident wrong predictions.' },
+  { label: 'A/B testing', category: 'evaluation', description: 'Compare two system variants with real users to measure actual impact on key business metrics.' },
 
   // ── Output & Deployment ─────────────────────────────
   { label: 'Class label', category: 'output-deployment', description: 'A discrete prediction — e.g. "cat", "spam", "positive sentiment".' },
@@ -94,6 +116,9 @@ export const BLOCK_LIBRARY: BlockTemplate[] = [
   { label: 'Batch report', category: 'output-deployment', description: 'Periodic bulk predictions delivered as files or emails — e.g. daily risk scores.' },
   { label: 'Real-time inference', category: 'output-deployment', description: 'Instant predictions on live data — e.g. autocomplete, fraud alerts, chatbots.' },
   { label: 'Edge deployment', category: 'output-deployment', description: 'Run the model on-device (phone, IoT) for low-latency, offline-capable inference.' },
+  { label: 'Chatbot / Conversational agent', category: 'output-deployment', description: 'An interactive dialogue system powered by language models — customer support, assistants, tutors.' },
+  { label: 'Generated audio', category: 'output-deployment', description: 'Model-produced sound — speech synthesis, music generation, sound effects, voice cloning.' },
+  { label: 'Monitoring', category: 'output-deployment', description: 'Track model performance, data drift, and system health in production to catch degradation early.' },
 
   // ── Risks & Constraints ─────────────────────────────
   { label: 'Overfitting', category: 'risks-constraints', description: 'The model memorizes training data instead of learning general patterns — watch out!' },
@@ -108,4 +133,8 @@ export const BLOCK_LIBRARY: BlockTemplate[] = [
   { label: 'Domain shift', category: 'risks-constraints', description: 'Real-world data may differ from training data — models can degrade over time.' },
   { label: 'Security', category: 'risks-constraints', description: 'Models can be attacked — adversarial inputs, data poisoning, model theft.' },
   { label: 'Maintenance', category: 'risks-constraints', description: 'Models need monitoring, retraining, and updates — plan for the long term.' },
+  { label: 'Hallucination', category: 'risks-constraints', description: 'Models generating confident but factually incorrect content — a key risk with generative AI and LLMs.' },
+  { label: 'Data leakage', category: 'risks-constraints', description: 'Information from outside the training set leaking in — causes overly optimistic evaluation and production failures.' },
+  { label: 'Regulatory compliance', category: 'risks-constraints', description: 'Legal requirements like GDPR, HIPAA, or the EU AI Act that constrain how ML systems are built and deployed.' },
+  { label: 'Environmental impact', category: 'risks-constraints', description: 'Energy consumption and carbon footprint of training and serving large models — sustainability matters.' },
 ];

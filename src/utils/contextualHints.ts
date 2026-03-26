@@ -80,6 +80,7 @@ export function generateHints(project: Project): ContextualHint[] {
     'F1-score',
     'ROC-AUC',
     'Confusion matrix',
+    'Log loss',
   ];
   const hasClassMetric = blocks.some(
     (b) => classMetrics.includes(b.label) && b.category === 'evaluation'
@@ -109,7 +110,7 @@ export function generateHints(project: Project): ContextualHint[] {
       ['Regression', 'Forecasting'].includes(b.label) &&
       b.category === 'problem-framing'
   );
-  const regMetrics = ['MAE', 'RMSE'];
+  const regMetrics = ['MAE', 'RMSE', 'R² score'];
   const hasRegMetric = blocks.some(
     (b) => regMetrics.includes(b.label) && b.category === 'evaluation'
   );
@@ -194,6 +195,8 @@ export function generateHints(project: Project): ContextualHint[] {
     'Forecasting',
     'Detection',
     'Segmentation',
+    'Multi-label classification',
+    'Sequence-to-sequence',
   ];
   const hasSupervisedTask = blocks.some(
     (b) => supervisedTasks.includes(b.label) && b.category === 'problem-framing'
@@ -248,7 +251,7 @@ export function generateHints(project: Project): ContextualHint[] {
   }
 
   // Deep learning without data/compute constraints
-  const deepModels = ['CNN', 'RNN', 'LSTM', 'Transformer', 'GNN', 'Autoencoder'];
+  const deepModels = ['CNN', 'RNN', 'LSTM', 'Transformer', 'GNN', 'Autoencoder', 'GAN', 'Diffusion model', 'Foundation model / LLM'];
   const hasDeepModel = blocks.some(
     (b) => deepModels.includes(b.label) && b.category === 'modeling'
   );
@@ -290,6 +293,97 @@ export function generateHints(project: Project): ContextualHint[] {
       message: 'Deep model without regularization techniques',
       suggestion:
         'Deep networks can easily overfit. Consider Dropout, Regularization, or Early stopping.',
+    });
+  }
+
+  // ── Generative AI & Foundation model hints ────────────────────────────
+
+  // Foundation model / LLM without prompt engineering
+  if (
+    labels.has('foundation model / llm') &&
+    !labels.has('prompt engineering') &&
+    !labels.has('fine-tuning')
+  ) {
+    hints.push({
+      id: 'llm-no-adaptation',
+      priority: 'medium',
+      message: 'Foundation model / LLM without adaptation strategy',
+      suggestion:
+        'LLMs need Prompt engineering or Fine-tuning to perform well on specific tasks. Add one to Training & Optimization.',
+    });
+  }
+
+  // GAN or Diffusion model without Generation in problem framing
+  const hasGenerativeModel = blocks.some(
+    (b) =>
+      ['GAN', 'Diffusion model'].includes(b.label) &&
+      b.category === 'modeling'
+  );
+  if (hasGenerativeModel && !labels.has('generation')) {
+    hints.push({
+      id: 'generative-model-no-generation-task',
+      priority: 'medium',
+      message: 'Generative model architecture without Generation task',
+      suggestion:
+        'You have a GAN or Diffusion model but no "Generation" in Problem Framing — is this a generative task?',
+    });
+  }
+
+  // Generation without hallucination risk
+  if (
+    labels.has('generation') &&
+    catBlocks('risks-constraints').length > 0 &&
+    !labels.has('hallucination')
+  ) {
+    hints.push({
+      id: 'generation-no-hallucination',
+      priority: 'medium',
+      message: 'Generative task without considering hallucination risk',
+      suggestion:
+        'Generative AI can produce convincing but incorrect content. Add "Hallucination" to Risks & Constraints.',
+    });
+  }
+
+  // Streaming data without real-time inference
+  if (labels.has('streaming data') && !labels.has('real-time inference')) {
+    hints.push({
+      id: 'streaming-no-realtime',
+      priority: 'low',
+      message: 'Streaming data without real-time inference',
+      suggestion:
+        'If your data streams continuously, consider whether you need real-time inference in Output & Deployment.',
+    });
+  }
+
+  // Graph / Network data without GNN
+  if (
+    blocks.some(
+      (b) => b.label === 'Graph / Network data' && b.category === 'data-sources'
+    ) &&
+    !blocks.some((b) => b.label === 'GNN' && b.category === 'modeling')
+  ) {
+    hints.push({
+      id: 'graph-data-no-gnn',
+      priority: 'medium',
+      message: 'Graph data without Graph Neural Network',
+      suggestion:
+        'Graph-structured data benefits from GNNs that can learn from node and edge relationships. Consider adding one to Modeling.',
+    });
+  }
+
+  // Reinforcement learning without RL agent
+  if (
+    blocks.some(
+      (b) => b.label === 'Reinforcement learning' && b.category === 'problem-framing'
+    ) &&
+    !blocks.some((b) => b.label === 'RL agent' && b.category === 'modeling')
+  ) {
+    hints.push({
+      id: 'rl-no-agent',
+      priority: 'medium',
+      message: 'Reinforcement learning task without RL agent model',
+      suggestion:
+        'RL tasks need an agent architecture (Q-learning, PPO, etc.). Add "RL agent" to Modeling.',
     });
   }
 

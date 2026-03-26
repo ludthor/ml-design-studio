@@ -8,7 +8,7 @@ An interactive educational tool for visually designing Machine Learning project 
 
 - **Learn by designing** — students architect ML systems visually, making design decisions explicit and justifiable
 - **Structured thinking** — the 8-stage pipeline enforces a logical progression from problem definition through deployment to risk analysis
-- **Immediate feedback** — 14 automated checks, 18 contextual hints, and rubric scoring guide students toward complete, coherent designs
+- **Immediate feedback** — 14 automated checks, 24 contextual hints, and rubric scoring guide students toward complete, coherent designs
 - **Assessment-ready** — instructors can review designs via a detailed assessment report with grades, rubric breakdowns, and rationale quality analysis
 
 ## Features
@@ -16,7 +16,7 @@ An interactive educational tool for visually designing Machine Learning project 
 ### Core Design Tools
 
 - **8-Category Pipeline** — Problem Framing → Data Sources → Preprocessing → Modeling → Training & Optimization → Evaluation → Output & Deployment → Risks & Constraints
-- **92 Predefined Blocks** — each with educational descriptions, organized across the 8 pipeline stages
+- **121 Predefined Blocks** — each with educational descriptions, organized across the 8 pipeline stages
 - **Custom Blocks** — create blocks with arbitrary labels in any category
 - **Drag & Drop** — drag blocks from the library into category panels; move blocks between categories
 - **Visual Connections** — click anchors on blocks to draw directed Bézier arrows showing data/logic flow; connected blocks highlight when selected
@@ -27,12 +27,12 @@ An interactive educational tool for visually designing Machine Learning project 
 ### Intelligence & Feedback
 
 - **14 Validation Checks** — flag missing pipeline stages, incomplete rationale, architectural inconsistencies (e.g., model without data, training without model)
-- **18 Contextual Hints** — detect architecture mismatches (CNN without images), metric mismatches (classification without classification metrics), pipeline gaps (no train/val/test split), and critical-thinking gaps (no risks addressed)
+- **24 Contextual Hints** — detect architecture mismatches (CNN without images), metric mismatches (classification without classification metrics), pipeline gaps (no train/val/test split), generative AI risks (hallucination, no adaptation strategy), and critical-thinking gaps (no risks addressed)
 - **Rubric Scoring** — 100-point scale across 4 dimensions: Pipeline Coverage (25), Design Depth (25), Pipeline Coherence (25), Critical Thinking (25), with letter grades A–F
 
 ### Educational Resources
 
-- **Glossary** — 45 searchable ML terms with definitions, key insights, common pitfalls, and cross-referenced related concepts; integrated into the Inspector panel for in-context learning
+- **Glossary** — 62 searchable ML terms with definitions, key insights, common pitfalls, and cross-referenced related concepts; integrated into the Inspector panel for in-context learning
 - **5 Starter Templates** — pre-built pipelines (Image Classification, Sentiment Analysis, Recommendation System, Demand Forecasting, Fraud Detection) with rationale and connections, spanning beginner to advanced difficulty
 - **Welcome Overlay** — onboarding guide with drag/click/connect instructions for first-time users
 - **Help Modal** — 7-step how-to guide with keyboard shortcuts and persistence info
@@ -96,8 +96,8 @@ src/
 ├── types.ts                       # Core type definitions
 ├── data/
 │   ├── categories.ts              # 8 pipeline categories with colors & descriptions
-│   ├── blockLibrary.ts            # 92 block templates with descriptions
-│   ├── glossary.ts                # 45 ML terms with definitions & insights
+│   ├── blockLibrary.ts            # 121 block templates with descriptions
+│   ├── glossary.ts                # 62 ML terms with definitions & insights
 │   └── starterTemplates.ts        # 5 pre-built project templates
 ├── context/
 │   └── ProjectContext.tsx          # Global state (useReducer + localStorage)
@@ -124,7 +124,7 @@ src/
     ├── exportUtils.ts              # PNG & PDF generation
     ├── importUtils.ts              # JSON import with validation
     ├── validationRules.ts          # 14 design validation checks
-    ├── contextualHints.ts          # 18 intelligent contextual hints
+    ├── contextualHints.ts          # 24 intelligent contextual hints
     ├── rubricScoring.ts            # 4-dimension rubric (100 pts)
     ├── assessmentReport.ts         # Assessment report text generation
     └── generateSummary.ts          # Plain-text summary generator
