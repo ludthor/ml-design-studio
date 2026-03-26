@@ -91,14 +91,11 @@ export default function ValidationPanel() {
           <div
             className="ml-2 flex items-center gap-1.5 px-2 py-1 rounded-full text-[10px] font-bold"
             style={{
-              backgroundColor: gradeColor(rubric.grade) + '15',
-              color: gradeColor(rubric.grade),
+              backgroundColor: scoreColor(rubric.totalScore, rubric.maxScore) + '15',
+              color: scoreColor(rubric.totalScore, rubric.maxScore),
             }}
           >
-            {rubric.grade}
-            <span className="font-normal opacity-70">
-              {rubric.totalScore}/{rubric.maxScore}
-            </span>
+            {rubric.totalScore}/{rubric.maxScore}
           </div>
         </div>
       </div>
@@ -124,23 +121,23 @@ function ScoreTab({
 }) {
   return (
     <div className="p-3 space-y-2.5">
-      {/* Overall grade */}
+      {/* Overall score */}
       <div className="flex items-center gap-3 pb-2 border-b border-slate-50">
         <div
-          className="w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold"
+          className="w-12 h-12 rounded-xl flex items-center justify-center text-lg font-bold"
           style={{
-            backgroundColor: gradeColor(rubric.grade) + '15',
-            color: gradeColor(rubric.grade),
+            backgroundColor: scoreColor(rubric.totalScore, rubric.maxScore) + '15',
+            color: scoreColor(rubric.totalScore, rubric.maxScore),
           }}
         >
-          {rubric.grade}
+          {rubric.totalScore}
         </div>
         <div>
           <p className="text-sm font-semibold text-slate-700">
-            {rubric.gradeLabel}
+            {rubric.totalScore} / {rubric.maxScore} points
           </p>
           <p className="text-[11px] text-slate-400">
-            {rubric.totalScore} / {rubric.maxScore} points
+            Across {rubric.dimensions.length} dimensions
           </p>
         </div>
         {/* Visual bar */}
@@ -150,7 +147,7 @@ function ScoreTab({
               className="h-full rounded-full transition-all duration-500"
               style={{
                 width: `${(rubric.totalScore / rubric.maxScore) * 100}%`,
-                backgroundColor: gradeColor(rubric.grade),
+                backgroundColor: scoreColor(rubric.totalScore, rubric.maxScore),
               }}
             />
           </div>
@@ -299,19 +296,12 @@ function TipsTab({
 
 // ── Helpers ───────────────────────────────────────────────────────────────
 
-function gradeColor(grade: string): string {
-  switch (grade) {
-    case 'A':
-      return '#10b981';
-    case 'B':
-      return '#3b82f6';
-    case 'C':
-      return '#f59e0b';
-    case 'D':
-      return '#f97316';
-    default:
-      return '#ef4444';
-  }
+function scoreColor(score: number, max: number): string {
+  const pct = max > 0 ? score / max : 0;
+  if (pct >= 0.8) return '#10b981';
+  if (pct >= 0.6) return '#3b82f6';
+  if (pct >= 0.4) return '#f59e0b';
+  return '#ef4444';
 }
 
 function dimColor(score: number, max: number): string {

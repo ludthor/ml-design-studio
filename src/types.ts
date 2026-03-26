@@ -96,8 +96,6 @@ export interface RubricResult {
   dimensions: RubricDimension[];
   totalScore: number;
   maxScore: number;
-  grade: string;
-  gradeLabel: string;
 }
 
 // ─── Contextual Hints ────────────────────────────────────────────────────────

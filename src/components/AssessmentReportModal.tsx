@@ -76,15 +76,15 @@ export default function AssessmentReportModal() {
             <h2 className="text-sm font-semibold text-slate-800">
               Assessment Report
             </h2>
-            {/* Grade badge */}
+            {/* Score badge */}
             <span
               className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
               style={{
-                backgroundColor: gradeColor(data.rubric.grade) + '18',
-                color: gradeColor(data.rubric.grade),
+                backgroundColor: scoreColor(data.rubric.totalScore, data.rubric.maxScore) + '18',
+                color: scoreColor(data.rubric.totalScore, data.rubric.maxScore),
               }}
             >
-              {data.rubric.grade} — {data.rubric.totalScore}/{data.rubric.maxScore}
+              {data.rubric.totalScore}/{data.rubric.maxScore}
             </span>
           </div>
           <div className="flex items-center gap-1">
@@ -116,7 +116,7 @@ export default function AssessmentReportModal() {
         {/* ─── Description ─────────────────────────────────── */}
         <div className="px-4 pt-2.5 pb-1 flex-shrink-0">
           <p className="text-[11px] text-slate-400 leading-relaxed">
-            Comprehensive evaluation of the student's ML pipeline design — use this report for grading, feedback, and identifying areas for improvement.
+            Overview of the student's ML pipeline design — use this report for feedback and identifying areas for improvement.
           </p>
         </div>
 
@@ -150,16 +150,14 @@ export default function AssessmentReportModal() {
   );
 }
 
-/* ─── Grade color ─────────────────────────────────────────────────────── */
+/* ─── Score color ─────────────────────────────────────────────────────── */
 
-function gradeColor(grade: string): string {
-  switch (grade) {
-    case 'A': return '#10b981';
-    case 'B': return '#3b82f6';
-    case 'C': return '#f59e0b';
-    case 'D': return '#f97316';
-    default:  return '#ef4444';
-  }
+function scoreColor(score: number, max: number): string {
+  const pct = max > 0 ? score / max : 0;
+  if (pct >= 0.8) return '#10b981';
+  if (pct >= 0.6) return '#3b82f6';
+  if (pct >= 0.4) return '#f59e0b';
+  return '#ef4444';
 }
 
 /* ─── Overview Tab ────────────────────────────────────────────────────── */
@@ -180,7 +178,7 @@ function OverviewTab({ data }: { data: AssessmentData }) {
     <div className="space-y-4">
       {/* Stat cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-        <StatCard label="Grade" value={data.rubric.grade} sub={data.rubric.gradeLabel} color={gradeColor(data.rubric.grade)} />
+        <StatCard label="Score" value={`${data.rubric.totalScore}`} sub={`out of ${data.rubric.maxScore}`} color={scoreColor(data.rubric.totalScore, data.rubric.maxScore)} />
         <StatCard label="Blocks" value={String(data.totalBlocks)} sub={`${filledCats}/${totalCats} categories`} />
         <StatCard label="Connections" value={String(data.totalConnections)} sub={`${data.crossCategoryConnections} cross-stage`} />
         <StatCard label="Rationale" value={`${rPct}%`} sub={`${data.rationaleStats.filled}/${data.rationaleStats.total} filled`} color={rPct >= 80 ? '#10b981' : rPct >= 50 ? '#f59e0b' : '#ef4444'} />
@@ -269,10 +267,9 @@ function RubricTab({ data }: { data: AssessmentData }) {
       {/* Overall */}
       <div className="text-center py-3 bg-slate-50 rounded-lg">
         <p className="text-[10px] text-slate-400 uppercase tracking-wider">Overall Score</p>
-        <p className="text-3xl font-bold mt-1" style={{ color: gradeColor(data.rubric.grade) }}>
-          {data.rubric.grade}
+        <p className="text-3xl font-bold mt-1" style={{ color: scoreColor(data.rubric.totalScore, data.rubric.maxScore) }}>
+          {data.rubric.totalScore}<span className="text-lg text-slate-400 font-normal">/{data.rubric.maxScore}</span>
         </p>
-        <p className="text-sm text-slate-500 mt-0.5">{data.rubric.gradeLabel} — {data.rubric.totalScore}/{data.rubric.maxScore} points</p>
       </div>
 
       {/* Dimensions */}

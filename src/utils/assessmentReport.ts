@@ -111,7 +111,7 @@ export function generateAssessmentText(project: Project): string {
 
   // ── Rubric Score ─────────────────────────────────────────────────────
   lines.push('── RUBRIC SCORE ──────────────────────────────────');
-  lines.push(`Grade:  ${d.rubric.grade} (${d.rubric.gradeLabel})  —  ${d.rubric.totalScore}/${d.rubric.maxScore} points`);
+  lines.push(`Score:  ${d.rubric.totalScore}/${d.rubric.maxScore} points`);
   lines.push('');
   for (const dim of d.rubric.dimensions) {
     const bar = '█'.repeat(Math.round((dim.score / dim.maxScore) * 20)).padEnd(20, '░');

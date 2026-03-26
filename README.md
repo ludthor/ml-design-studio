@@ -9,7 +9,7 @@ An interactive educational tool for visually designing Machine Learning project 
 - **Learn by designing** — students architect ML systems visually, making design decisions explicit and justifiable
 - **Structured thinking** — the 8-stage pipeline enforces a logical progression from problem definition through deployment to risk analysis
 - **Immediate feedback** — 14 automated checks, 24 contextual hints, and rubric scoring guide students toward complete, coherent designs
-- **Assessment-ready** — instructors can review designs via a detailed assessment report with grades, rubric breakdowns, and rationale quality analysis
+- **Assessment-ready** — instructors can review designs via a detailed assessment report with rubric breakdowns and rationale quality analysis
 
 ## Features
 
@@ -28,7 +28,7 @@ An interactive educational tool for visually designing Machine Learning project 
 
 - **14 Validation Checks** — flag missing pipeline stages, incomplete rationale, architectural inconsistencies (e.g., model without data, training without model)
 - **24 Contextual Hints** — detect architecture mismatches (CNN without images), metric mismatches (classification without classification metrics), pipeline gaps (no train/val/test split), generative AI risks (hallucination, no adaptation strategy), and critical-thinking gaps (no risks addressed)
-- **Rubric Scoring** — 100-point scale across 4 dimensions: Pipeline Coverage (25), Design Depth (25), Pipeline Coherence (25), Critical Thinking (25), with letter grades A–F
+- **Rubric Scoring** — 100-point scale across 4 dimensions: Pipeline Coverage (25), Design Depth (25), Pipeline Coherence (25), Critical Thinking (25)
 
 ### Educational Resources
 
@@ -39,7 +39,7 @@ An interactive educational tool for visually designing Machine Learning project 
 
 ### Assessment & Export
 
-- **Assessment Report** — 4-tab instructor report (Overview, Rubric, Rationale Quality, Checks) with grade cards, coverage grids, and visual score bars; copy to clipboard or download as `.txt`
+- **Assessment Report** — 4-tab instructor report (Overview, Rubric, Rationale Quality, Checks) with coverage grids and visual score bars; copy to clipboard or download as `.txt`
 - **Project Summary** — structured overview by category with blocks, tags, rationale, and connections; copy to clipboard
 - **Export Formats** — JSON (save/restore), PNG screenshot, PDF report with title page, plain-text summary
 - **Import** — load previously exported JSON projects with validation

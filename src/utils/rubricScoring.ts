@@ -165,26 +165,6 @@ export function computeRubric(project: Project): RubricResult {
   // ── Aggregate ────────────────────────────────────────────────────────────
   const totalScore = dims.reduce((sum, d) => sum + d.score, 0);
   const maxScore = dims.reduce((sum, d) => sum + d.maxScore, 0);
-  const pct = maxScore > 0 ? (totalScore / maxScore) * 100 : 0;
 
-  let grade: string;
-  let gradeLabel: string;
-  if (pct >= 90) {
-    grade = 'A';
-    gradeLabel = 'Excellent';
-  } else if (pct >= 80) {
-    grade = 'B';
-    gradeLabel = 'Good';
-  } else if (pct >= 70) {
-    grade = 'C';
-    gradeLabel = 'Satisfactory';
-  } else if (pct >= 60) {
-    grade = 'D';
-    gradeLabel = 'Needs Work';
-  } else {
-    grade = 'F';
-    gradeLabel = 'Incomplete';
-  }
-
-  return { dimensions: dims, totalScore, maxScore, grade, gradeLabel };
+  return { dimensions: dims, totalScore, maxScore };
 }
