@@ -2,7 +2,7 @@
 
 An interactive educational tool for visually designing Machine Learning project pipelines. Students drag, connect, and annotate blocks across a structured 8-category pipeline — from problem framing to deployment — building a clear, assessable project blueprint with built-in rubric scoring, contextual feedback, and exportable reports.
 
-![License: CC-BY 4.0](https://img.shields.io/badge/License-CC--BY%204.0-blue.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
 ## Goals
 
@@ -140,7 +140,7 @@ src/
 
 ## License
 
-This project is licensed under **[CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/)**.
+This project is licensed under the **[MIT License](LICENSE)**.
 
 ---
 

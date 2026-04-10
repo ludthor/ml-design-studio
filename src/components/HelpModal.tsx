@@ -98,12 +98,12 @@ export default function HelpModal() {
                 </strong>
                 <br />
                 <a
-                  href="https://creativecommons.org/licenses/by/4.0/"
+                  href="https://opensource.org/licenses/MIT"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[10px] text-blue-400 hover:text-blue-600 underline"
                 >
-                  CC-BY 4.0 License
+                  MIT License
                 </a>
               </p>
             </div>
